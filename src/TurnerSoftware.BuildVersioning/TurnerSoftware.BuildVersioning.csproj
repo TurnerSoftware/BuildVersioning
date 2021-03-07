@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NoWarn>$(NoWarn);NU5100;NU5104</NoWarn>
+    <BuildVersioningToolPath>../../TurnerSoftware.BuildVersioning.Tool/bin/$(Configuration)/$(TargetFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
+  </PropertyGroup>
+
+  <Import Project="build/TurnerSoftware.BuildVersioning.targets" />
+
+  <PropertyGroup>
+    <BuildVersioningLogLevel>high</BuildVersioningLogLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TurnerSoftware.BuildVersioning.Tool\TurnerSoftware.BuildVersioning.Tool.csproj" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="buildMultiTargeting\TurnerSoftware.BuildVersioning.targets" Pack="true" PackagePath="buildMultiTargeting" />
+    <Content Include="build\TurnerSoftware.BuildVersioning.targets" Pack="true" PackagePath="build" />
+    <None Include="$(OutputPath)/*" Exclude="$(OutputPath)/*.dev.json;$(OutputPath)/TurnerSoftware.BuildVersioning.dll;$(OutputPath)/TurnerSoftware.BuildVersioning.pdb;$(OutputPath)/TurnerSoftware.BuildVersioning.deps.json" Pack="true" PackagePath="Tools" />
+  </ItemGroup>
+</Project>

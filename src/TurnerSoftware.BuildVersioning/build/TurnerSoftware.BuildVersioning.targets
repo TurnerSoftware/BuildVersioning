@@ -1,0 +1,59 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildAssemblyVersion)' == '' Or '$(MSBuildAssemblyVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <GetPackageVersionDependsOn>$(GetPackageVersionDependsOn);BuildVersioning</GetPackageVersionDependsOn>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);MSB3073;MSB4181</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BuildVersioningToolPath Condition="$(BuildVersioningToolPath) == ''">../Tools/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
+    <BuildFullVersionFormat>{Major}.{Minor}.{Patch}{PreRelease}{BuildMetadata}</BuildFullVersionFormat>
+    <BuildFileVersionFormat>{Major}.{Minor}.{Patch}.0</BuildFileVersionFormat>
+    <BuildAssemblyVersionFormat>{Major}.0.0.0</BuildAssemblyVersionFormat>
+    <BuildVersioningLogLevel>low</BuildVersioningLogLevel>
+  </PropertyGroup>
+
+  <Target Name="BuildVersioning" BeforeTargets="BeforeCompile;GetAssemblyVersion;CoreCompile;GenerateNuspec" Condition="'$(DesignTimeBuild)' != 'true' AND '$(SkipBuildVersioning)' != 'true'">
+    <Error Condition="'$(UsingMicrosoftNETSdk)' != 'true'" Code="BLDVER0001" Text="Build Versioning only works in SDK-style projects." />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: BuildFullVersionFormat=$(BuildFullVersionFormat)" />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: BuildFileVersionFormat=$(BuildFileVersionFormat)" />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: BuildAssemblyVersionFormat=$(BuildAssemblyVersionFormat)" />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: BuildPreReleaseFormat=$(BuildPreReleaseFormat)" />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: BuildMetadataFormat=$(BuildMetadataFormat)" />
+    <ItemGroup>
+      <BuildVersioningInputs Remove="@(BuildVersioningInputs)" />
+      <BuildVersioningOutput Remove="@(BuildVersioningOutput)" />
+    </ItemGroup>
+    <ItemGroup>
+      <BuildVersioningInputs Include="--full-version-format &quot;$(BuildFullVersionFormat)&quot;" />
+      <BuildVersioningInputs Include="--file-version-format &quot;$(BuildFileVersionFormat)&quot;" />
+      <BuildVersioningInputs Include="--assembly-version-format &quot;$(BuildAssemblyVersionFormat)&quot;" />
+      <BuildVersioningInputs Condition="$(BuildPreReleaseFormat) != ''" Include="--prerelease-format &quot;$(BuildPreReleaseFormat)&quot;" />
+      <BuildVersioningInputs Condition="$(BuildMetadataFormat) != ''" Include="--build-metadata-format &quot;$(BuildMetadataFormat)&quot;" />
+    </ItemGroup>
+    <Exec Command="dotnet &quot;$(MSBuildThisFileDirectory)$(BuildVersioningToolPath)&quot; @(BuildVersioningInputs->'%(Identity)', ' ')" ConsoleToMSBuild="true" StandardOutputImportance="Low" ContinueOnError="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="BuildVersioningOutput" />
+      <Output TaskParameter="ExitCode" PropertyName="BuildVersioningErrorCode"/>
+    </Exec>
+    <Error Condition="$(BuildVersioningErrorCode) == -1" Text="Build versioning failed. Make sure `git` is in the PATH and that the `.git` folder is present." />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: Output=$(BuildVersioningOutput)" />
+    <PropertyGroup Condition="$(BuildVersioningErrorCode) == 0">
+      <BuildFullVersion>$(BuildVersioningOutput.Split(`;`)[0])</BuildFullVersion>
+      <BuildFileVersion>$(BuildVersioningOutput.Split(`;`)[1])</BuildFileVersion>
+      <BuildAssemblyVersion>$(BuildVersioningOutput.Split(`;`)[2])</BuildAssemblyVersion>
+      <PackageVersion>$(BuildFullVersion)</PackageVersion>
+      <FileVersion>$(BuildFileVersion)</FileVersion>
+      <AssemblyVersion>$(BuildAssemblyVersion)</AssemblyVersion>
+      <Version>$(BuildFullVersion)</Version>
+    </PropertyGroup>
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: PackageVersion=$(PackageVersion)" />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: FileVersion=$(FileVersion)" />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: AssemblyVersion=$(AssemblyVersion)" />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning: Version=$(Version)" />
+  </Target>
+
+</Project>
