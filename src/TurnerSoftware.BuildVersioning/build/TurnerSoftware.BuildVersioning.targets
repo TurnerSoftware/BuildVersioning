@@ -15,6 +15,18 @@
     <BuildFileVersionFormat>{Major}.{Minor}.{Patch}.0</BuildFileVersionFormat>
     <BuildAssemblyVersionFormat>{Major}.0.0.0</BuildAssemblyVersionFormat>
     <BuildVersioningLogLevel>low</BuildVersioningLogLevel>
+    <BuildVersioningWithGitHub>true</BuildVersioningWithGitHub>
+    <BuildVersioningWithAppVeyor>true</BuildVersioningWithAppVeyor>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
+    <BuildPreReleaseFormat Condition="$(PR_NUMBER) != ''">PR$(PR_NUMBER)</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-$(GITHUB_RUN_ID)</BuildMetadataFormat>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
+    <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">PR$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-$(APPVEYOR_BUILD_NUMBER)</BuildMetadataFormat>
   </PropertyGroup>
 
   <Target Name="BuildVersioning" BeforeTargets="BeforeCompile;GetAssemblyVersion;CoreCompile;GenerateNuspec" Condition="'$(DesignTimeBuild)' != 'true' AND '$(SkipBuildVersioning)' != 'true'">
