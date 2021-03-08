@@ -3,20 +3,22 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <SelfHostedBuildVersioning Condition="'$(DesignTimeBuild)' != 'true' AND '$(SkipBuildVersioning)' != 'true'">true</SelfHostedBuildVersioning>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20071.2" PrivateAssets="All" />
   </ItemGroup>
 
-  <!-- Support self-versioning via Build Versioning -->
-  <PropertyGroup>
-    <BuildVersioningToolPath>../../InternalVersioner/bin/$(Configuration)/$(TargetFramework)/InternalVersioner.dll</BuildVersioningToolPath>
+  <!-- Self-hosting BuildVersioning -->
+  <PropertyGroup Condition="$(SelfHostedBuildVersioning) == 'true'">
+    <BuildVersioningToolPath>../../TurnerSoftware.BuildVersioning.Tool/bin/$(Configuration)/$(TargetFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
     <BuildVersioningLogLevel>high</BuildVersioningLogLevel>
   </PropertyGroup>
-  <Import Project="../TurnerSoftware.BuildVersioning/build/TurnerSoftware.BuildVersioning.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\InternalVersioner\InternalVersioner.csproj" PrivateAssets="All" />
-  </ItemGroup>
+  <Target Name="_SelfHostedBuildVersioning" BeforeTargets="BeforeBuild" Condition="$(SelfHostedBuildVersioning) == 'true'">
+    <Message Importance="high" Text="Self-hosting build of TurnerSoftware.BuildVersioning.Tool" />
+    <Exec Command="dotnet build TurnerSoftware.BuildVersioning.Tool.csproj -c $(Configuration) -v quiet --nologo /p:SkipBuildVersioning=true"></Exec>
+  </Target>
+  <Import Project="../TurnerSoftware.BuildVersioning/build/TurnerSoftware.BuildVersioning.targets" Condition="$(SelfHostedBuildVersioning) == 'true'" />
   
 </Project>
