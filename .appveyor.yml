@@ -7,13 +7,13 @@ environment:
   BUILD_ARTIFACT_PATH: build-artifacts
 
 build_script:
-  - ps: dotnet build -c $(BUILD_CONFIGURATION)
-  - ps: dotnet test --results-directory $(BUILD_ARTIFACT_PATH)/test-results
-  - ps: dotnet pack --no-build -c $(BUILD_CONFIGURATION) /p:PackageOutputPath=$(BUILD_ARTIFACT_PATH)
+  - ps: dotnet build -c $env:BUILD_CONFIGURATION
+  - ps: dotnet test --results-directory $env:BUILD_ARTIFACT_PATH/test-results
+  - ps: dotnet pack --no-build -c $env:BUILD_CONFIGURATION /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH
   
 test: false
 artifacts:
-  - path: '.\$(BUILD_ARTIFACT_PATH)\*'
+  - path: '.\$env:BUILD_ARTIFACT_PATH\*'
 
 deploy:
   - provider: NuGet
