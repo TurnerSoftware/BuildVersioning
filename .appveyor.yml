@@ -2,14 +2,18 @@ version: 'Build {build}'
 image: Visual Studio 2019
 skip_branch_with_pr: true
 
+environment:
+  BUILD_CONFIGURATION: Release
+  BUILD_ARTIFACT_PATH: build-artifacts
+
 build_script:
-  - ps: dotnet build -c Release
-  - ps: dotnet test
-  - ps: dotnet pack --no-build -c Release /p:PackageOutputPath=build-artifacts
+  - ps: dotnet build -c $(BUILD_CONFIGURATION)
+  - ps: dotnet test --results-directory $(BUILD_ARTIFACT_PATH)/test-results
+  - ps: dotnet pack --no-build -c $(BUILD_CONFIGURATION) /p:PackageOutputPath=$(BUILD_ARTIFACT_PATH)
   
 test: false
 artifacts:
-  - path: '.\build-artifacts\*'
+  - path: '.\$(BUILD_ARTIFACT_PATH)\*'
 
 deploy:
   - provider: NuGet
