@@ -25,16 +25,17 @@
     <BuildVersioningWithAzureDevOps>true</BuildVersioningWithAzureDevOps>
   </PropertyGroup>
   
-  <Target Name="_BuildVersioningWithGitHub" Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
+  <PropertyGroup Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
+    <GitHubPullRequestNumber>$(GITHUB_REF.Split('/')[3])</GitHubPullRequestNumber>
+    <BuildPreReleaseFormat Condition="$(GitHubPullRequestNumber) != ''">pr.$(GitHubPullRequestNumber)</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-github.$(GITHUB_RUN_ID)</BuildMetadataFormat>
+  </PropertyGroup>
+  <Target Name="_BuildVersioningWithGitHub" BeforeTargets="BuildVersioning" Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning with GitHub: Fetching tags from Git." />
     <Exec Command="git fetch --prune --unshallow --tags" StandardOutputImportance="low" StandardErrorImportance="high">
       <Output TaskParameter="ExitCode" PropertyName="BuildVersioningWithGitHub_GitFetch_ExitCode" />
     </Exec>
     <Error Condition="$(BuildVersioningWithGitHub_GitFetch_ExitCode) != 0" Text="Failed to fetch tags from Git." />
-    <PropertyGroup>
-      <GitHubPullRequestNumber>$(GITHUB_REF.Split('/')[3])</GitHubPullRequestNumber>
-      <BuildPreReleaseFormat Condition="$(GitHubPullRequestNumber) != ''">pr.$(GitHubPullRequestNumber)</BuildPreReleaseFormat>
-      <BuildMetadataFormat>{CommitHash}-github.$(GITHUB_RUN_ID)</BuildMetadataFormat>
-    </PropertyGroup>
   </Target>
 
   <PropertyGroup Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
