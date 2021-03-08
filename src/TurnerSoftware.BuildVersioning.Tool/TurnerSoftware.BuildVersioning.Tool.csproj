@@ -15,10 +15,10 @@
     <BuildVersioningToolPath>../../TurnerSoftware.BuildVersioning.Tool/bin/$(Configuration)/$(TargetFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
     <BuildVersioningLogLevel>high</BuildVersioningLogLevel>
   </PropertyGroup>
-  <Import Project="../TurnerSoftware.BuildVersioning/build/TurnerSoftware.BuildVersioning.targets" Condition="$(SelfHostedBuildVersioning) == 'true'" />
-  <Target Name="_SelfHostedBuildVersioning" BeforeTargets="BeforeCompile;GetAssemblyVersion;CoreCompile;GenerateNuspec" Condition="$(SelfHostedBuildVersioning) == 'true'">
+  <Target Name="_SelfHostedBuildVersioning" BeforeTargets="BeforeBuild" Condition="$(SelfHostedBuildVersioning) == 'true'">
     <Message Importance="high" Text="Self-hosting build of TurnerSoftware.BuildVersioning.Tool" />
     <Exec Command="dotnet build TurnerSoftware.BuildVersioning.Tool.csproj -c $(Configuration) -v quiet --nologo /p:SkipBuildVersioning=true"></Exec>
   </Target>
+  <Import Project="../TurnerSoftware.BuildVersioning/build/TurnerSoftware.BuildVersioning.targets" Condition="$(SelfHostedBuildVersioning) == 'true'" />
   
 </Project>
