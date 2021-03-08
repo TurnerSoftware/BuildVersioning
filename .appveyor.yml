@@ -13,7 +13,7 @@ build_script:
   
 test: false
 artifacts:
-  - path: '.\$env:BUILD_ARTIFACT_PATH\*'
+  - path: '.\$(BUILD_ARTIFACT_PATH)\*'
 
 deploy:
   - provider: NuGet
