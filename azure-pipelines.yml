@@ -1,0 +1,24 @@
+trigger:
+- main
+
+jobs:
+- job: BuildApplication
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+    BUILD_CONFIGURATION: 'Release'
+    BUILD_ARTIFACT_PATH: $(Build.ArtifactStagingDirectory)
+ 
+  steps:
+  - script: dotnet build -c $(BUILD_CONFIGURATION)
+    displayName: 'Build Application'
+       
+  - script: dotnet pack --no-build -c $(BUILD_CONFIGURATION) /p:PackageOutputPath=$(BUILD_ARTIFACT_PATH)
+    displayName: 'Pack Build'
+    
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Build Artifacts'
+    inputs:
+      ArtifactName: 'BuildVersioning'
+      pathToPublish: $(BUILD_ARTIFACT_PATH)
