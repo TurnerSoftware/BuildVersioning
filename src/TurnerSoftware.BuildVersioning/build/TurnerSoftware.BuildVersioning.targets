@@ -14,19 +14,30 @@
     <BuildFullVersionFormat>{Major}.{Minor}.{Patch}{PreRelease}{BuildMetadata}</BuildFullVersionFormat>
     <BuildFileVersionFormat>{Major}.{Minor}.{Patch}.0</BuildFileVersionFormat>
     <BuildAssemblyVersionFormat>{Major}.0.0.0</BuildAssemblyVersionFormat>
+    <BuildPreReleaseFormat>dev.{CommitHeight}</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}</BuildMetadataFormat>
     <BuildVersioningLogLevel>low</BuildVersioningLogLevel>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <BuildVersioningWithGitHub>true</BuildVersioningWithGitHub>
     <BuildVersioningWithAppVeyor>true</BuildVersioningWithAppVeyor>
+    <BuildVersioningWithAzureDevOps>true</BuildVersioningWithAzureDevOps>
   </PropertyGroup>
   
   <PropertyGroup Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
-    <BuildPreReleaseFormat Condition="$(PR_NUMBER) != ''">PR$(PR_NUMBER)</BuildPreReleaseFormat>
-    <BuildMetadataFormat>{CommitHash}-$(GITHUB_RUN_ID)</BuildMetadataFormat>
+    <BuildPreReleaseFormat Condition="$(PR_NUMBER) != ''">pr.$(PR_NUMBER)</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-github.$(GITHUB_RUN_ID)</BuildMetadataFormat>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
-    <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">PR$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
-    <BuildMetadataFormat>{CommitHash}-$(APPVEYOR_BUILD_NUMBER)</BuildMetadataFormat>
+    <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">pr.$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-appveyor.$(APPVEYOR_BUILD_NUMBER)</BuildMetadataFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(BuildVersioningWithAzureDevOps) == 'true' AND $(Build) != '' AND $(Build.DefinitionVersion) != ''">
+    <BuildPreReleaseFormat Condition="$(System.PullRequest.PullRequestId) != ''">pr.$(System.PullRequest.PullRequestId)</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-azuredevops.$(Build.BuildId)</BuildMetadataFormat>
   </PropertyGroup>
 
   <Target Name="BuildVersioning" BeforeTargets="BeforeCompile;GetAssemblyVersion;CoreCompile;GenerateNuspec" Condition="'$(DesignTimeBuild)' != 'true' AND '$(SkipBuildVersioning)' != 'true'">
