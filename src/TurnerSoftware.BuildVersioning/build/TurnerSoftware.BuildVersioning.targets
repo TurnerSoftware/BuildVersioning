@@ -26,7 +26,7 @@
   </PropertyGroup>
   
   <PropertyGroup Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
-    <GitHubPullRequestNumber>$(GITHUB_REF.Split('/')[3])</GitHubPullRequestNumber>
+    <GitHubPullRequestNumber>$(GITHUB_REF.Split('/')[2])</GitHubPullRequestNumber>
     <BuildPreReleaseFormat Condition="$(GitHubPullRequestNumber) != ''">pr.$(GitHubPullRequestNumber)</BuildPreReleaseFormat>
     <BuildMetadataFormat>{CommitHash}-github.$(GITHUB_RUN_ID)</BuildMetadataFormat>
   </PropertyGroup>
