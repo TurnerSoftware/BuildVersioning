@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurnerSoftware.BuildVersioning.Tool", "src\TurnerSoftware.BuildVersioning.Tool\TurnerSoftware.BuildVersioning.Tool.csproj", "{D796E0D8-9315-47F1-86BD-EA8958E5A7FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1EFB8EBA-39B4-472E-9DE3-2B25E902EE2C}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{790239FE-AB99-45EE-B764-23F4F351C61E}"
 	ProjectSection(SolutionItems) = preProject
