@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="buildMultiTargeting\TurnerSoftware.BuildVersioning.targets" Pack="true" PackagePath="buildMultiTargeting" />
-    <Content Include="build\TurnerSoftware.BuildVersioning.targets" Pack="true" PackagePath="build" />
+    <Content Include="buildMultiTargeting\*" Pack="true" PackagePath="buildMultiTargeting" />
+    <Content Include="build\*" Pack="true" PackagePath="build" />
     <None Include="$(OutputPath)/*" Exclude="$(OutputPath)/*.dev.json;$(OutputPath)/TurnerSoftware.BuildVersioning.dll;$(OutputPath)/TurnerSoftware.BuildVersioning.pdb;$(OutputPath)/TurnerSoftware.BuildVersioning.deps.json" Pack="true" PackagePath="Tools" />
   </ItemGroup>
 </Project>

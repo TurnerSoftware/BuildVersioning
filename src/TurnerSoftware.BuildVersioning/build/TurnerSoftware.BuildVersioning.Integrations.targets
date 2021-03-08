@@ -1,0 +1,24 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <BuildVersioningWithGitHub>true</BuildVersioningWithGitHub>
+    <BuildVersioningWithAppVeyor>true</BuildVersioningWithAppVeyor>
+    <BuildVersioningWithAzureDevOps>true</BuildVersioningWithAzureDevOps>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
+    <BuildPreReleaseFormat Condition="$(GITHUB_REF.Split('/')[1]) == 'pull'">pr.$(GITHUB_REF.Split('/')[2])</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-github.$(GITHUB_RUN_ID)</BuildMetadataFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
+    <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">pr.$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-appveyor.$(APPVEYOR_BUILD_NUMBER)</BuildMetadataFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(BuildVersioningWithAzureDevOps) == 'true' AND $(Build_DefinitionVersion) != ''">
+    <BuildPreReleaseFormat Condition="$(Build_SourceBranch.Split('/')[1]) == 'pull'">pr.$(Build_SourceBranch.Split('/')[2])</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-azuredevops.$(Build_BuildId)</BuildMetadataFormat>
+  </PropertyGroup>
+
+</Project>

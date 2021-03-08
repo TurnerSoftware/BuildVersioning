@@ -19,27 +19,7 @@
     <BuildVersioningLogLevel>low</BuildVersioningLogLevel>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <BuildVersioningWithGitHub>true</BuildVersioningWithGitHub>
-    <BuildVersioningWithAppVeyor>true</BuildVersioningWithAppVeyor>
-    <BuildVersioningWithAzureDevOps>true</BuildVersioningWithAzureDevOps>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
-    <GitHubPullRequestNumber>$(GITHUB_REF.Split('/')[2])</GitHubPullRequestNumber>
-    <BuildPreReleaseFormat Condition="$(GitHubPullRequestNumber) != ''">pr.$(GitHubPullRequestNumber)</BuildPreReleaseFormat>
-    <BuildMetadataFormat>{CommitHash}-github.$(GITHUB_RUN_ID)</BuildMetadataFormat>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
-    <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">pr.$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
-    <BuildMetadataFormat>{CommitHash}-appveyor.$(APPVEYOR_BUILD_NUMBER)</BuildMetadataFormat>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(BuildVersioningWithAzureDevOps) == 'true' AND $(Build_DefinitionVersion) != ''">
-    <BuildPreReleaseFormat Condition="$(Build_SourceBranch.Split('/')[1]) == 'pull'">pr.$(Build_SourceBranch.Split('/')[2])</BuildPreReleaseFormat>
-    <BuildMetadataFormat>{CommitHash}-azuredevops.$(Build_BuildId)</BuildMetadataFormat>
-  </PropertyGroup>
+  <Import Project="TurnerSoftware.BuildVersioning.Integrations.targets" />
 
   <Target Name="BuildVersioning" BeforeTargets="BeforeCompile;GetAssemblyVersion;CoreCompile;GenerateNuspec" Condition="'$(DesignTimeBuild)' != 'true' AND '$(SkipBuildVersioning)' != 'true'">
     <Error Condition="'$(UsingMicrosoftNETSdk)' != 'true'" Code="BLDVER0001" Text="Build Versioning only works in SDK-style projects." />
