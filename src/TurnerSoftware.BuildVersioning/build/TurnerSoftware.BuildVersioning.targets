@@ -37,7 +37,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(BuildVersioningWithAzureDevOps) == 'true' AND $(Build_DefinitionVersion) != ''">
-    <BuildPreReleaseFormat Condition="$(Build_SourceBranch.Split('/'))[1] == 'pull'">pr.$(Build_SourceBranch.Split('/'))[2]</BuildPreReleaseFormat>
+    <BuildPreReleaseFormat Condition="$(Build_SourceBranch.Split('/')[1]) == 'pull'">pr.$(Build_SourceBranch.Split('/')[2])</BuildPreReleaseFormat>
     <BuildMetadataFormat>{CommitHash}-azuredevops.$(Build_BuildId)</BuildMetadataFormat>
   </PropertyGroup>
 
