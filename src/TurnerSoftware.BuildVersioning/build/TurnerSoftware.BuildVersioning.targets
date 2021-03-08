@@ -36,9 +36,9 @@
     <BuildMetadataFormat>{CommitHash}-appveyor.$(APPVEYOR_BUILD_NUMBER)</BuildMetadataFormat>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(BuildVersioningWithAzureDevOps) == 'true' AND $(Build) != '' AND $(Build.DefinitionVersion) != ''">
-    <BuildPreReleaseFormat Condition="$(System.PullRequest.PullRequestId) != ''">pr.$(System.PullRequest.PullRequestId)</BuildPreReleaseFormat>
-    <BuildMetadataFormat>{CommitHash}-azuredevops.$(Build.BuildId)</BuildMetadataFormat>
+  <PropertyGroup Condition="$(BuildVersioningWithAzureDevOps) == 'true' AND $(Build_DefinitionVersion) != ''">
+    <BuildPreReleaseFormat Condition="$(System_PullRequest_PullRequestId) != ''">pr.$(System_PullRequest_PullRequestId)</BuildPreReleaseFormat>
+    <BuildMetadataFormat>{CommitHash}-azuredevops.$(Build_BuildId)</BuildMetadataFormat>
   </PropertyGroup>
 
   <Target Name="BuildVersioning" BeforeTargets="BeforeCompile;GetAssemblyVersion;CoreCompile;GenerateNuspec" Condition="'$(DesignTimeBuild)' != 'true' AND '$(SkipBuildVersioning)' != 'true'">
