@@ -13,7 +13,7 @@
   <Target Name="_BuildVersioningWithGitHub" BeforeTargets="BeforeBuild" Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
     <!-- GitHub by default doesn't have the tags available on checkout. This helps fetch them just prior to build versioning. -->
     <Message Importance="$(BuildVersioningLogLevel)" Text="Fetching tags from Git ahead of build versioning" />
-    <Exec Command="git fetch --prune --unshallow --tags --quiet" IgnoreExitCode="true" ConsoleToMSBuild="true" StandardOutputImportance="Low">
+    <Exec Command="git fetch --prune --unshallow --tags --quiet" IgnoreExitCode="true" ConsoleToMSBuild="true" StandardErrorImportance="low" StandardOutputImportance="low">
       <Output TaskParameter="ConsoleOutput" PropertyName="BuildVersioningWithGitHub_FetchTags" />
     </Exec>
   </Target>
