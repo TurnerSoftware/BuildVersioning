@@ -10,6 +10,11 @@
     <BuildPreReleaseFormat Condition="$(GITHUB_REF.Split('/')[1]) == 'pull'">pr.$(GITHUB_REF.Split('/')[2])</BuildPreReleaseFormat>
     <BuildMetadataFormat>{CommitHash}-github.$(GITHUB_RUN_ID)</BuildMetadataFormat>
   </PropertyGroup>
+  <Target Name="_BuildVersioningWithGitHub" BeforeTargets="BuildVersioning" Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
+    <!-- GitHub by default doesn't have the tags available on checkout. This helps fetch them just prior to build versioning. -->
+    <Message Importance="$(BuildVersioningLogLevel)" Text="Fetching tags from Git ahead of build versioning" />
+    <Exec Command="git fetch --prune --unshallow --tags" IgnoreExitCode="true" ContinueOnError="true" />
+  </Target>
 
   <PropertyGroup Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
     <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">pr.$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
