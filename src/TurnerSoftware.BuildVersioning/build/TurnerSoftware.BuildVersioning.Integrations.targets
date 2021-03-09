@@ -17,7 +17,7 @@
 
   <PropertyGroup Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
     <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">pr.$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
-    <BuildMetadataFormat>{CommitHash}-appveyor.$(APPVEYOR_BUILD_NUMBER)</BuildMetadataFormat>
+    <BuildMetadataFormat>{CommitHash}-appveyor.$(APPVEYOR_BUILD_ID)</BuildMetadataFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(BuildVersioningWithAzureDevOps) == 'true' AND $(Build_DefinitionVersion) != ''">
