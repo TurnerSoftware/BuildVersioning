@@ -43,8 +43,8 @@ namespace TurnerSoftware.BuildVersioning.Tool
 					MajorVersion = int.Parse(matchedGroups["major"].Value),
 					MinorVersion = int.Parse(matchedGroups["minor"].Value),
 					PatchVersion = int.Parse(matchedGroups["patch"].Value),
-					PreRelease = matchedGroups.TryGetValue("preRelease", out var preReleaseGroup) ? preReleaseGroup.Value : default,
-					BuildMetadata = matchedGroups.TryGetValue("buildMetadata", out var buildMetadataGroup) ? buildMetadataGroup.Value : default,
+					PreRelease = matchedGroups["preRelease"].Success ? matchedGroups["preRelease"].Value : default,
+					BuildMetadata = matchedGroups["buildMetadata"].Success ? matchedGroups["buildMetadata"].Value : default,
 					CommitHeight = int.Parse(matchedGroups["commitHeight"].Value),
 					IsTaggedRelease = int.Parse(matchedGroups["commitHeight"].Value) == 0,
 					CommitHash = matchedGroups["commitHash"].Value
