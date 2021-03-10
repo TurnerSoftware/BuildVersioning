@@ -1,14 +1,14 @@
 ﻿namespace TurnerSoftware.BuildVersioning.Tool
 {
-	class VersionDetails
+	record VersionDetails
 	{
-		public int MajorVersion { get; set; }
-		public int MinorVersion { get; set; }
-		public int PatchVersion { get; set; }
-		public string PreRelease { get; set; }
-		public string BuildMetadata { get; set; }
-		public string CommitHash { get; set; }
-		public int CommitHeight { get; set; }
-		public bool IsTaggedRelease { get; set; }
+		public int MajorVersion { get; init; }
+		public int MinorVersion { get; init; }
+		public int PatchVersion { get; init; }
+		public string PreRelease { get; init; }
+		public string BuildMetadata { get; init; }
+		public string CommitHash { get; init; }
+		public int CommitHeight { get; init; }
+		public bool IsTaggedRelease { get; init; }
 	}
 }

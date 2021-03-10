@@ -65,15 +65,21 @@ namespace TurnerSoftware.BuildVersioning.Tool
 
 				if (!versionDetails.IsTaggedRelease && versionDetails.PreRelease is null && preReleaseFormat.Length > 0)
 				{
-					versionDetails.PreRelease = preReleaseFormat
-						.Replace("{CommitHeight}", versionDetails.CommitHeight.ToString());
+					versionDetails = versionDetails with
+					{
+						PreRelease = preReleaseFormat
+							.Replace("{CommitHeight}", versionDetails.CommitHeight.ToString())
+					};
 				}
 
 				if (versionDetails.BuildMetadata is null && buildMetadataFormat.Length > 0)
 				{
-					versionDetails.BuildMetadata = buildMetadataFormat
-						.Replace("{CommitHash}", versionDetails.CommitHash)
-						.Replace("{CommitHeight}", versionDetails.CommitHeight.ToString());
+					versionDetails = versionDetails with
+					{
+						BuildMetadata = buildMetadataFormat
+							.Replace("{CommitHash}", versionDetails.CommitHash)
+							.Replace("{CommitHeight}", versionDetails.CommitHeight.ToString())
+					};
 				}
 
 				var fullVersion = FormatVersion(fullVersionFormat, versionDetails)
@@ -111,35 +117,29 @@ namespace TurnerSoftware.BuildVersioning.Tool
 				return null;
 			}
 
-			var versionDetails = new VersionDetails();
 			var matchedGroups = GitDescribeParser.Match(gitDetails).Groups;
 
 			if (matchedGroups["major"].Success)
 			{
-				versionDetails.MajorVersion = int.Parse(matchedGroups["major"].Value);
-				versionDetails.MinorVersion = int.Parse(matchedGroups["minor"].Value);
-				versionDetails.PatchVersion = int.Parse(matchedGroups["patch"].Value);
-
-				if (matchedGroups.TryGetValue("preRelease", out var preReleaseGroup))
+				return new VersionDetails
 				{
-					versionDetails.PreRelease = preReleaseGroup.Value;
-				}
-
-				if (matchedGroups.TryGetValue("buildMetadata", out var buildMetadataGroup))
-				{
-					versionDetails.PreRelease = buildMetadataGroup.Value;
-				}
-
-				versionDetails.CommitHeight = int.Parse(matchedGroups["commitHeight"].Value);
-
-				if (versionDetails.CommitHeight == 0)
-				{
-					versionDetails.IsTaggedRelease = true;
-				}
+					MajorVersion = int.Parse(matchedGroups["major"].Value),
+					MinorVersion = int.Parse(matchedGroups["minor"].Value),
+					PatchVersion = int.Parse(matchedGroups["patch"].Value),
+					PreRelease = matchedGroups.TryGetValue("preRelease", out var preReleaseGroup) ? preReleaseGroup.Value : default,
+					BuildMetadata = matchedGroups.TryGetValue("buildMetadata", out var buildMetadataGroup) ? buildMetadataGroup.Value : default,
+					CommitHeight = int.Parse(matchedGroups["commitHeight"].Value),
+					IsTaggedRelease = int.Parse(matchedGroups["commitHeight"].Value) == 0,
+					CommitHash = matchedGroups["commitHash"].Value
+				};
 			}
-
-			versionDetails.CommitHash = matchedGroups["commitHash"].Value;
-			return versionDetails;
+			else
+			{
+				return new VersionDetails
+				{
+					CommitHash = matchedGroups["commitHash"].Value
+				};
+			}
 		}
 
 		/// <summary>
