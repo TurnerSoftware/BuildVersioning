@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <RootNamespace>BuildVersioning</RootNamespace>
+    <RootNamespace>TurnerSoftware.BuildVersioning</RootNamespace>
 
     <Company>Turner Software</Company>
 

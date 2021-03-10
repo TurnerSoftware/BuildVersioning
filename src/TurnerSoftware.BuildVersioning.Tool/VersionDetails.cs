@@ -1,6 +1,6 @@
 ﻿namespace TurnerSoftware.BuildVersioning.Tool
 {
-	record VersionDetails
+	public record VersionDetails
 	{
 		public int MajorVersion { get; init; }
 		public int MinorVersion { get; init; }

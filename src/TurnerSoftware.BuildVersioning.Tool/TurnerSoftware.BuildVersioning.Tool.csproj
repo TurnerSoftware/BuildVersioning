@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <BuildVersioningLogLevel>high</BuildVersioningLogLevel>
+    <RootNamespace>TurnerSoftware.BuildVersioning.Tool</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
