@@ -7,16 +7,16 @@ Simple build versioning for .NET, powered by Git tags.
 Inspired by [MinVer](https://github.com/adamralph/minver), Build Versioning is a different attempt at the same problem - to make versioning simple.
 The simplicity comes from how the version strings are generated and the built-in integrations.
 
-## Table of Contents
+## 📖 Table of Contents
 - [Getting Started](#Getting-Started)
-- [Example Versions](#Example-Versions)
+  - [Example Versions](#Example-Versions)
 - [CI Versioning Integrations](#CI-Versioning-Integrations)
 - [Customizing Version Strings](#Customizing-Version-Strings)
   - [Formatting Tags](#Formatting-Tags)
   - [Version Strings](#Version-Strings)
 - [Additional Settings](#Additional-Settings)
 
-## Getting Started
+## ⭐ Getting Started
 
 1. [Install Build Versioning](https://www.nuget.org/packages/TurnerSoftware.BuildVersioning/)<br>
 ```powershell
@@ -30,7 +30,7 @@ This information is then fed through a formatting system to generate specific [v
 
 Additional information is provided from Git directly including the commit height (number of commits since the last tag) and the commit hash itself.
 
-## Example Versions
+### Example Versions
 
 These examples use the default configuration after installing Build Versioning.
 
@@ -42,7 +42,7 @@ These examples use the default configuration after installing Build Versioning.
 |Non-PR Commit via GitHub Actions   |1.2.4      |4|1.2.4-dev.4+a4f31ea-github.432515|1.2.4.0|1.0.0.0|
 |PR Commit via GitHub Actions       |1.2.4      |4|1.2.4-pr.17+a4f31ea-github.432515|1.2.4.0|1.0.0.0|
 
-## CI Versioning Integrations
+## 🛠 CI Versioning Integrations
 
 By default, Build Versioning provides rich pre-release and build metadata from the current CI environment.
 For pull requests, this will automatically have a pre-release defined which will include the PR number (eg. `1.2.4-pr.17`).
@@ -64,7 +64,7 @@ Each integration can be individually disabled through configuration. For example
 <BuildVersioningWithGitHub>false</BuildVersioningWithGitHub>
 ```
 
-## Customizing Version Strings
+## ✏ Customizing Version Strings
 
 ### Formatting Tags
 
@@ -93,13 +93,13 @@ Additionally, the full version string supports two additional formatting tags.
 
 |Name|Configuration Tag|Default Value|
 |-|-|-|
-|**Full Version**<br>aka. the "package" or "product" version, it is used for versioning the package itself and displayed in NuGet.|`<BuildFullVersionFormat>`|`{Major}.{Minor}.{Patch}{PreRelease}{BuildMetadata}`|
-|**File Version**<br>A superficial version number, displayed by the OS. This is not used by the .NET runtime.|`<BuildFileVersionFormat>`|`{Major}.{Minor}.{Patch}.0`|
-|**Assembly Version**<br>Used by .NET for referencing the assembly when strong-named signing is enabled. Updating this by major version is advised.|`<BuildAssemblyVersionFormat>`|`{Major}.0.0.0`|
+|📦 **Full Version**<br>aka. the "package" or "product" version, it is used for versioning the package itself and displayed in NuGet.|`<BuildFullVersionFormat>`|`{Major}.{Minor}.{Patch}{PreRelease}{BuildMetadata}`|
+|📄 **File Version**<br>A superficial version number, displayed by the OS. This is not used by the .NET runtime.|`<BuildFileVersionFormat>`|`{Major}.{Minor}.{Patch}.0`|
+|⚙ **Assembly Version**<br>Used by .NET for referencing the assembly when strong-named signing is enabled. Updating this by major version is advised.|`<BuildAssemblyVersionFormat>`|`{Major}.0.0.0`|
 
 For more information on file version vs assembly version, [see the MSDN docs](https://docs.microsoft.com/en-us/troubleshoot/visualstudio/general/assembly-version-assembly-file-version).
 
-## Additonal Settings
+## 🎛 Additonal Settings
 
 ### Disabling Build Versioning
 
