@@ -63,7 +63,7 @@ namespace TurnerSoftware.BuildVersioning.Tool
 					return -1;
 				}
 
-				if (versionDetails.PreRelease is null && preReleaseFormat.Length > 0)
+				if (!versionDetails.IsTaggedRelease && versionDetails.PreRelease is null && preReleaseFormat.Length > 0)
 				{
 					versionDetails.PreRelease = preReleaseFormat
 						.Replace("{CommitHeight}", versionDetails.CommitHeight.ToString());
@@ -131,6 +131,11 @@ namespace TurnerSoftware.BuildVersioning.Tool
 				}
 
 				versionDetails.CommitHeight = int.Parse(matchedGroups["commitHeight"].Value);
+
+				if (versionDetails.CommitHeight == 0)
+				{
+					versionDetails.IsTaggedRelease = true;
+				}
 			}
 
 			versionDetails.CommitHash = matchedGroups["commitHash"].Value;

@@ -9,5 +9,6 @@
 		public string BuildMetadata { get; set; }
 		public string CommitHash { get; set; }
 		public int CommitHeight { get; set; }
+		public bool IsTaggedRelease { get; set; }
 	}
 }
