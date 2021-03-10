@@ -2,6 +2,11 @@
 
 Simple build versioning for .NET, powered by Git tags.
 
+[![AppVeyor](https://img.shields.io/appveyor/ci/Turnerj/buildversioning/main.svg)](https://ci.appveyor.com/project/Turnerj/BuildVersioning)
+[![Codecov](https://img.shields.io/codecov/c/github/turnersoftware/BuildVersioning/main.svg)](https://codecov.io/gh/TurnerSoftware/BuildVersioning)
+[![NuGet](https://img.shields.io/nuget/v/TurnerSoftware.BuildVersioning.svg)](https://www.nuget.org/packages/TurnerSoftware.BuildVersioning/)
+
+
 ## Overview
 
 Inspired by [MinVer](https://github.com/adamralph/minver), Build Versioning is a different attempt at the same problem - to make versioning simple.
