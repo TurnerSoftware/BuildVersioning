@@ -103,7 +103,7 @@ Each integration can be individually disabled through configuration. For example
 These are formatting tags available for you to use for customizing your version strings. 
 
 |Tag|Notes|
-|-|-|-|
+|-|-|
 |`{Major}`|The major version retrieved from the Git tag. If there are no tags available, defaults to `0`.|
 |`{Major++}`|The major version retrieved from the Git tag incremented by 1. If this is a tagged release, the value will return the major version without increment.|
 |`{Minor}`|The minor version retrieved from the Git tag. If there are no tags available, defaults to `0`.|
