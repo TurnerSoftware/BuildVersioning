@@ -17,7 +17,7 @@
 				return null;
 			}
 
-			if (!versionDetails.IsTaggedRelease && versionDetails.PreRelease is null && options.PreReleaseFormat.Length > 0)
+			if (!versionDetails.IsTaggedRelease && versionDetails.PreRelease is null && options.PreReleaseFormat?.Length > 0)
 			{
 				versionDetails = versionDetails with
 				{
@@ -26,7 +26,7 @@
 				};
 			}
 
-			if (versionDetails.BuildMetadata is null && options.BuildMetadataFormat.Length > 0)
+			if (options.BuildMetadataFormat?.Length > 0)
 			{
 				versionDetails = versionDetails with
 				{
@@ -36,9 +36,7 @@
 				};
 			}
 
-			var fullVersion = FormatVersion(options.FullVersionFormat, versionDetails)
-				.Replace("{PreRelease}", versionDetails.PreRelease is null ? default : $"-{versionDetails.PreRelease}")
-				.Replace("{BuildMetadata}", versionDetails.BuildMetadata is null ? default : $"+{versionDetails.BuildMetadata}");
+			var fullVersion = FormatFullVersion(options.FullVersionFormat, versionDetails);
 			var fileVersion = FormatVersion(options.FileVersionFormat, versionDetails);
 			var assemblyVersion = FormatVersion(options.AssemblyVersionFormat, versionDetails);
 
@@ -50,9 +48,26 @@
 			};
 		}
 
+		private static string FormatFullVersion(string format, VersionDetails versionDetails)
+		{
+			if (string.IsNullOrEmpty(format))
+			{
+				return format;
+			}
+
+			return FormatVersion(format, versionDetails)
+				.Replace("{PreRelease}", versionDetails.PreRelease is null ? default : $"-{versionDetails.PreRelease}")
+				.Replace("{BuildMetadata}", versionDetails.BuildMetadata is null ? default : $"+{versionDetails.BuildMetadata}");
+		}
+
 		private static string FormatVersion(string format, VersionDetails versionDetails)
 		{
-			var autoIncrement = versionDetails.CommitHeight > 0 ? 1 : 0;
+			if (string.IsNullOrEmpty(format))
+			{
+				return format;
+			}
+
+			var autoIncrement = versionDetails.IsTaggedRelease ? 0 : 1;
 			return format
 				.Replace("{Major}", versionDetails.MajorVersion.ToString())
 				.Replace("{Major++}", (versionDetails.MajorVersion + autoIncrement).ToString())
