@@ -81,38 +81,23 @@ These are formatting tags available for you to use for customizing your version 
 |`{CommitHeight}`|The number of commits since the last tag. If there are no tags available, defaults to `0`.|
 |`{CommitHash}`|The first 7 characters of the most recent commit hash.|
 
-### Version Strings
+Additionally, the full version string supports two additional formatting tags.
 
-#### Full Version
-
-**Default Format:** `{Major}.{Minor}.{Patch}{PreRelease}{BuildMetadata}`<br>
-**Defined via:** `<BuildFullVersionFormat>`
-
-Also known as the "package" or "product" version, it is used for versioning the package itself and displayed in NuGet.
-This string supports sub-tags that provide pre-release and build metadata.
-
-|Sub-tag|Default Value|Defined via|Description|
+|Tag|Default Value|Configuration Tag|Description|
 |-|-|-|-|
 |`{PreRelease}`|`dev.{CommitHeight}`|`<BuildPreReleaseFormat>`|The pre-release portion of the version. This will include the leading dash (`-`) if a pre-release is defined, otherwise blank. The value is overridden by the Git tag if this is a tagged release.|
 |`{BuildMetadata}`|`{CommitHash}`|`<BuildMetadataFormat>`|The build metadata portion of the version. This will include the leading plus (`+`) if build metadata is defined, otherwise blank. The value is overridden by the Git tag if this is a tagged release and is defined in the tag.|
 
-#### File Version
 
-**Default Format:** `{Major}.{Minor}.{Patch}.0`<br>
-**Defined via:** `<BuildFileVersionFormat>`
+### Version Strings
 
-The file version number is provided by the OS for displaying in Windows Explorer and can be considered informational in comparison to the assembly version.
-This is not used by .NET and will not impact the running of your application.
+|Name|Configuration Tag|Default Value|
+|-|-|-|
+|**Full Version**<br>aka. the "package" or "product" version, it is used for versioning the package itself and displayed in NuGet.|`<BuildFullVersionFormat>`|`{Major}.{Minor}.{Patch}{PreRelease}{BuildMetadata}`|
+|**File Version**<br>A superficial version number, displayed by the OS. This is not used by the .NET runtime.|`<BuildFileVersionFormat>`|`{Major}.{Minor}.{Patch}.0`|
+|**Assembly Version**<br>Used by .NET for referencing the assembly when strong-named signing is enabled. Updating this by major version is advised.|`<BuildAssemblyVersionFormat>`|`{Major}.0.0.0`|
 
-#### Assembly Version
-
-**Default Format:** `{Major}.0.0.0`<br>
-**Defined via:** `<BuildAssemblyVersionFormat>`
-
-The assembly version number is part of an assembly's identity and plays a key part in referencing the assembly.
-This should update only on breaking changes which, following SemVer, would be a major version update.
-
-For more information on File Version vs Assembly Version, [see the MSDN docs](https://docs.microsoft.com/en-us/troubleshoot/visualstudio/general/assembly-version-assembly-file-version).
+For more information on file version vs assembly version, [see the MSDN docs](https://docs.microsoft.com/en-us/troubleshoot/visualstudio/general/assembly-version-assembly-file-version).
 
 ## Additonal Settings
 
