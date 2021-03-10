@@ -1,4 +1,4 @@
-# Build Versioning
+﻿# Build Versioning
 
 Simple build versioning for .NET, powered by Git tags.
 
@@ -34,49 +34,17 @@ Additional information is provided from Git directly including the commit height
 
 These examples use the default configuration after installing Build Versioning.
 
-#### New Release
-
-**Last Git Tag:** `1.2.4`<br>
-**Commits Since Tag:** `0`<br>
-**Full Version:** `1.2.4+a4f31ea`<br>
-**File Version:** `1.2.4.0`<br>
-**Assembly Version:** `1.0.0.0`
-
-#### New Pre-Release
-
-**Last Git Tag:** `1.2.4-alpha`<br>
-**Commits Since Tag:** `0`<br>
-**Full Version:** `1.2.4-alpha+a4f31ea`<br>
-**File Version:** `1.2.4.0`<br>
-**Assembly Version:** `1.0.0.0`
-
-#### Main Branch / Active Development
-
-**Last Git Tag:** `1.2.4`<br>
-**Commits Since Tag:** `4`<br>
-**Full Version:** `1.2.4-dev.4+a4f31ea`<br>
-**File Version:** `1.2.4.0`<br>
-**Assembly Version:** `1.0.0.0`
-
-#### Non-PR Commit via GitHub Actions (CI Integration)
-
-**Last Git Tag:** `1.2.4`<br>
-**Commits Since Tag:** `4`<br>
-**Full Version:** `1.2.4-dev.4+a4f31ea-github.432515`<br>
-**File Version:** `1.2.4.0`<br>
-**Assembly Version:** `1.0.0.0`
-
-#### PR Commit via GitHub Actions (CI Integration)
-
-**Last Git Tag:** `1.2.4`<br>
-**Commits Since Tag:** `4`<br>
-**Full Version:** `1.2.4-pr.17+a4f31ea-github.432515`<br>
-**File Version:** `1.2.4.0`<br>
-**Assembly Version:** `1.0.0.0`
+|Example|Git Tag|Commit Height|Full Version|File Version|Assembly Version|
+|-|:-:|:-:|:-:|:-:|:-:|
+|New Release                        |1.2.4      |0|1.2.4+a4f31ea                    |1.2.4.0|1.0.0.0|
+|New Pre-Release                    |1.2.4-alpha|0|1.2.4-alpha+a4f31ea              |1.2.4.0|1.0.0.0|
+|Main Branch / Active Development   |1.2.4      |4|1.2.4-dev.4+a4f31ea              |1.2.4.0|1.0.0.0|
+|Non-PR Commit via GitHub Actions   |1.2.4      |4|1.2.4-dev.4+a4f31ea-github.432515|1.2.4.0|1.0.0.0|
+|PR Commit via GitHub Actions       |1.2.4      |4|1.2.4-pr.17+a4f31ea-github.432515|1.2.4.0|1.0.0.0|
 
 ## CI Versioning Integrations
 
-By default, Build Versioning provides rich pre-release and build metadata from the current Continuous Integration environment.
+By default, Build Versioning provides rich pre-release and build metadata from the current CI environment.
 For pull requests, this will automatically have a pre-release defined which will include the PR number (eg. `1.2.4-pr.17`).
 For all commits, the build metadata will include the CI environment and a relevant build identifier (eg. `1.2.4+a4f31ea-github.432515`).
 
