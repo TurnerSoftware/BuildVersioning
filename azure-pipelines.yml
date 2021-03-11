@@ -13,6 +13,9 @@ jobs:
   steps:
   - script: dotnet build -c $(BUILD_CONFIGURATION)
     displayName: 'Build Application'
+
+  - script: dotnet test /p:SkipBuildVersioning=true
+    displayName: 'Test Application'
        
   - script: dotnet pack --no-build -c $(BUILD_CONFIGURATION) /p:PackageOutputPath=$(BUILD_ARTIFACT_PATH)
     displayName: 'Pack Build'
