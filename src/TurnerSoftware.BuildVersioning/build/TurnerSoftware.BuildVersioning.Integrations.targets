@@ -10,7 +10,10 @@
     <BuildPreReleaseFormat Condition="$(GITHUB_REF.Split('/')[1]) == 'pull'">pr.$(GITHUB_REF.Split('/')[2])</BuildPreReleaseFormat>
     <BuildMetadataFormat>{CommitHash}-github.$(GITHUB_RUN_ID)</BuildMetadataFormat>
   </PropertyGroup>
-  <Target Name="_BuildVersioningWithGitHub" BeforeTargets="BeforeBuild" Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
+  <Target Name="_BuildVersioningWithGitHub" BeforeTargets="BeforeBuild" Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != '' AND !$(_BuildVersioningRunOne.Contains('github'))">
+    <PropertyGroup>
+      <_BuildVersioningRunOnce>$(_BuildVersioningRunOnce)github;</_BuildVersioningRunOnce>
+    </PropertyGroup>
     <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning-GitHubIntegration: Fetching tags for versioning as they aren't available by default in GitHub Actions" />
     <Exec Command="git fetch --prune --unshallow --tags --quiet" IgnoreExitCode="true" StandardErrorImportance="low" StandardOutputImportance="low" />
   </Target>
@@ -19,7 +22,10 @@
     <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">pr.$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
     <BuildMetadataFormat>{CommitHash}-appveyor.$(APPVEYOR_BUILD_ID)</BuildMetadataFormat>
   </PropertyGroup>
-  <Target Name="_BuildVersioningWithAppVeyor" AfterTargets="BuildVersioning" Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
+  <Target Name="_BuildVersioningWithAppVeyor" AfterTargets="BuildVersioning" Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != '' AND !$(_BuildVersioningRunOne.Contains('appveyor'))">
+    <PropertyGroup>
+      <_BuildVersioningRunOnce>$(_BuildVersioningRunOnce)appveyor;</_BuildVersioningRunOnce>
+    </PropertyGroup>
     <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning-AppVeyorIntegration: Updating AppVeyor build name to $(BuildFullVersion)" />
     <Exec Command="powershell Update-AppveyorBuild -Version $(BuildFullVersion)" />
   </Target>
