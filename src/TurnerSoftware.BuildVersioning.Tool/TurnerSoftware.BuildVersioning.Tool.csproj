@@ -5,6 +5,8 @@
     <TargetFramework>net5.0</TargetFramework>
     <BuildVersioningLogLevel>high</BuildVersioningLogLevel>
     <RootNamespace>TurnerSoftware.BuildVersioning.Tool</RootNamespace>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>buildversioning</ToolCommandName>
   </PropertyGroup>
 
   <PropertyGroup>
