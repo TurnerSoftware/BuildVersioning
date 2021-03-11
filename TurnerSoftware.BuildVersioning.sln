@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{790239
 		.codecov.yml = .codecov.yml
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
 		CodeCoverage.runsettings = CodeCoverage.runsettings
 		License.txt = License.txt
 		README.md = README.md
@@ -28,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EC91FA7D
 		tests\Directory.Build.props = tests\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurnerSoftware.BuildVersioning.Tests", "tests\TurnerSoftware.BuildVersioning.Tests\TurnerSoftware.BuildVersioning.Tests.csproj", "{F97BCD71-3D0E-4B36-8BE5-B401A05E0829}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurnerSoftware.BuildVersioning.Tests", "tests\TurnerSoftware.BuildVersioning.Tests\TurnerSoftware.BuildVersioning.Tests.csproj", "{F97BCD71-3D0E-4B36-8BE5-B401A05E0829}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,7 +8,7 @@ environment:
 
 build_script:
   - ps: dotnet build -c $env:BUILD_CONFIGURATION
-  - ps: dotnet test --results-directory $env:BUILD_ARTIFACT_PATH/test-results
+  - ps: dotnet test --results-directory $env:BUILD_ARTIFACT_PATH/test-results /p:SkipBuildVersioning=true
   - ps: dotnet pack --no-build -c $env:BUILD_CONFIGURATION /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH
   
 test: false
