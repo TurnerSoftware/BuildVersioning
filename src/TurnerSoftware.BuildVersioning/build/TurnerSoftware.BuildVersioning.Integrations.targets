@@ -19,6 +19,10 @@
     <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">pr.$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
     <BuildMetadataFormat>{CommitHash}-appveyor.$(APPVEYOR_BUILD_ID)</BuildMetadataFormat>
   </PropertyGroup>
+  <Target Name="_BuildVersioningWithAppVeyor" AfterTargets="BuildVersioning" Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
+    <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning-AppVeyorIntegration: Updating AppVeyor build name to $(BuildFullVersion)" />
+    <Exec Command="powershell Update-AppveyorBuild -Version $(BuildFullVersion)" />
+  </Target>
 
   <PropertyGroup Condition="$(BuildVersioningWithAzureDevOps) == 'true' AND $(Build_DefinitionVersion) != ''">
     <BuildPreReleaseFormat Condition="$(Build_SourceBranch.Split('/')[1]) == 'pull'">pr.$(Build_SourceBranch.Split('/')[2])</BuildPreReleaseFormat>
