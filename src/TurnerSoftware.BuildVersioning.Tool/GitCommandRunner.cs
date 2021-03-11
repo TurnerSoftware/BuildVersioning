@@ -42,6 +42,6 @@ namespace TurnerSoftware.BuildVersioning.Tool
 			}
 		}
 
-		public string GitDescribe() => RunCommand("describe --tags --abbrev=7 --always");
+		public string GitDescribe() => RunCommand("describe --tags --abbrev=7 --always --long");
 	}
 }
