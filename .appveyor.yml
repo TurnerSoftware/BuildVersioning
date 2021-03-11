@@ -1,15 +1,18 @@
-version: 'Build {build}'
 image: Visual Studio 2019
 skip_branch_with_pr: true
 
 environment:
-  BUILD_CONFIGURATION: Release
   BUILD_ARTIFACT_PATH: build-artifacts
 
+install:
+  - choco install dotnet-sdk
+
 build_script:
-  - ps: dotnet build -c $env:BUILD_CONFIGURATION
+  - ps: dotnet --version
+  - ps: dotnet restore
+  - ps: dotnet build --no-restore -c Release
   - ps: dotnet test --results-directory $env:BUILD_ARTIFACT_PATH/test-results /p:SkipBuildVersioning=true
-  - ps: dotnet pack --no-build -c $env:BUILD_CONFIGURATION /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH
+  - ps: dotnet pack -c Release --no-build /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH
   
 test: false
 artifacts:
