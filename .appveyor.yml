@@ -4,6 +4,9 @@ skip_branch_with_pr: true
 environment:
   BUILD_ARTIFACT_PATH: build-artifacts
 
+install:
+  - choco install dotnet-sdk
+
 build_script:
   - ps: dotnet --version
   - ps: dotnet restore
