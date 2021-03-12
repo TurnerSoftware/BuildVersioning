@@ -10,9 +10,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <BuildVersioningToolPath>bin/$(Configuration)/$(TargetFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
+    <BuildVersioningToolPath>$(MSBuildThisFileDirectory)bin/$(Configuration)/$(TargetFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
     <SelfHostedBuildVersioning Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'">true</SelfHostedBuildVersioning>
-    <BuildVersioningToolPath>../../TurnerSoftware.BuildVersioning.Tool/$(BuildVersioningToolPath)</BuildVersioningToolPath>
   </PropertyGroup>
   
   <ItemGroup>

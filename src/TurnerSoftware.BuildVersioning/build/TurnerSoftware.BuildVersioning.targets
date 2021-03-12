@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <BuildVersioningToolPath Condition="$(BuildVersioningToolPath) == ''">../Tools/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
+    <BuildVersioningToolPath Condition="$(BuildVersioningToolPath) == ''">$(MSBuildThisFileDirectory)../Tools/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
     <BuildFullVersionFormat Condition="$(BuildFullVersionFormat) == ''">{Major}.{Minor}.{Patch}{PreRelease}{BuildMetadata}</BuildFullVersionFormat>
     <BuildFileVersionFormat Condition="$(BuildFileVersionFormat) == ''">{Major}.{Minor}.{Patch}.0</BuildFileVersionFormat>
     <BuildAssemblyVersionFormat Condition="$(BuildAssemblyVersionFormat) == ''">{Major}.0.0.0</BuildAssemblyVersionFormat>
@@ -21,11 +21,11 @@
   <Import Project="TurnerSoftware.BuildVersioning.Integrations.targets" />
 
   <Target Name="BuildVersioning" 
-          BeforeTargets="BeforeCompile;CoreCompile;GenerateNuspec" 
-          DependsOnTargets="PrepareForBuild;CoreGenerateAssemblyInfo" 
-          Condition="'$(DesignTimeBuild)' != 'true' AND '$(SkipBuildVersioning)' != 'true'">
+          BeforeTargets="BeforeCompile;GenerateNuspec" 
+          Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'">
     <Error Condition="'$(UsingMicrosoftNETSdk)' != 'true'" Code="BLDVER0001" Text="Build Versioning only works in SDK-style projects." />
     <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning: Project=$(MSBuildProjectFile)" />
+    <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning: BuildVersioningToolPath=$(BuildVersioningToolPath)" />
     <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning: FullVersionFormat=$(BuildFullVersionFormat)" />
     <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning: FileVersionFormat=$(BuildFileVersionFormat)" />
     <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning: AssemblyVersionFormat=$(BuildAssemblyVersionFormat)" />
@@ -38,7 +38,7 @@
       <BuildVersioningInputs Condition="$(BuildPreReleaseFormat) != ''" Include="--prerelease-format &quot;$(BuildPreReleaseFormat)&quot;" />
       <BuildVersioningInputs Condition="$(BuildMetadataFormat) != ''" Include="--build-metadata-format &quot;$(BuildMetadataFormat)&quot;" />
     </ItemGroup>
-    <Exec Command="dotnet &quot;$(MSBuildThisFileDirectory)$(BuildVersioningToolPath)&quot; @(BuildVersioningInputs->'%(Identity)', ' ')" ConsoleToMSBuild="true" StandardOutputImportance="Low" ContinueOnError="true">
+    <Exec Command="dotnet &quot;$(BuildVersioningToolPath)&quot; @(BuildVersioningInputs->'%(Identity)', ' ')" ConsoleToMSBuild="true" StandardOutputImportance="Low" ContinueOnError="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="BuildVersioningOutput" />
       <Output TaskParameter="ExitCode" PropertyName="BuildVersioningErrorCode"/>
     </Exec>

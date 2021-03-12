@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <BuildVersioningToolPath>../../TurnerSoftware.BuildVersioning.Tool/bin/$(Configuration)/$(TargetFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
+    <BuildVersioningToolPath>$(MSBuildThisFileDirectory)../TurnerSoftware.BuildVersioning.Tool/bin/$(Configuration)/$(TargetFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
   </PropertyGroup>
 
   <Import Project="build/TurnerSoftware.BuildVersioning.targets" />
