@@ -4,24 +4,30 @@ trigger:
 jobs:
 - job: BuildApplication
   pool:
-    vmImage: 'ubuntu-latest'
+    vmImage: ubuntu-latest
 
   variables:
-    BUILD_CONFIGURATION: 'Release'
+    BUILD_CONFIGURATION: Release
     BUILD_ARTIFACT_PATH: $(Build.ArtifactStagingDirectory)
  
   steps:
-  - script: dotnet build -c $(BUILD_CONFIGURATION)
-    displayName: 'Build Application'
+  - script: dotnet --version
+    displayName: .NET version
 
-  - script: dotnet test /p:SkipBuildVersioning=true
-    displayName: 'Test Application'
+  - script: dotnet restore
+    displayName: Install dependencies
+
+  - script: dotnet build --no-restore -c $(BUILD_CONFIGURATION)
+    displayName: Build
+
+  - script: dotnet test --no-restore /p:SkipBuildVersioning=true
+    displayName: Test
        
   - script: dotnet pack --no-build -c $(BUILD_CONFIGURATION) /p:PackageOutputPath=$(BUILD_ARTIFACT_PATH)
-    displayName: 'Pack Build'
+    displayName: Pack
     
   - task: PublishBuildArtifacts@1
-    displayName: 'Publish Build Artifacts'
+    displayName: Publish artifacts
     inputs:
-      ArtifactName: 'BuildVersioning'
+      ArtifactName: BuildVersioning
       pathToPublish: $(BUILD_ARTIFACT_PATH)

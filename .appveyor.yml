@@ -2,17 +2,24 @@ image: Visual Studio 2019
 skip_branch_with_pr: true
 
 environment:
+  # Disable the .NET logo in the console output.
+  DOTNET_NOLOGO: true
+  # Disable the .NET first time experience to skip caching NuGet packages and speed up the build.
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  # Disable sending .NET CLI telemetry to Microsoft.
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
   BUILD_ARTIFACT_PATH: build-artifacts
 
 install:
-  - choco install dotnet-sdk
+  - choco install dotnet-sdk --version 5.0.200
 
 build_script:
   - ps: dotnet --version
   - ps: dotnet restore
   - ps: dotnet build --no-restore -c Release
-  - ps: dotnet test --results-directory $env:BUILD_ARTIFACT_PATH/test-results /p:SkipBuildVersioning=true
-  - ps: dotnet pack -c Release --no-build /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH
+  - ps: dotnet test --no-restore --results-directory $env:BUILD_ARTIFACT_PATH/test-results /p:SkipBuildVersioning=true
+  - ps: dotnet pack --no-build -c Release /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH
   
 test: false
 artifacts:
