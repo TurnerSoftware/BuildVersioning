@@ -18,7 +18,8 @@
     <BuildVersioningLogLevel Condition="$(BuildVersioningLogLevel) == ''">low</BuildVersioningLogLevel>
   </PropertyGroup>
 
-  <Import Project="TurnerSoftware.BuildVersioning.Integrations.targets" />
+  <Import Project="TurnerSoftware.BuildVersioning.Integrations.targets"
+          Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'" />
 
   <Target Name="BuildVersioning" 
           BeforeTargets="BeforeCompile;GenerateNuspec" 
