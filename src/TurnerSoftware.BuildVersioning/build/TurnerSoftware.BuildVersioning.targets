@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <BuildVersioningToolPath Condition="$(BuildVersioningToolPath) == ''">$(MSBuildThisFileDirectory)../Tools/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
+    <BuildVersioningToolPath Condition="$(BuildVersioningToolPath) == ''">$(MSBuildThisFileDirectory)../tools/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
     <BuildFullVersionFormat Condition="$(BuildFullVersionFormat) == ''">{Major}.{Minor}.{Patch}{PreRelease}{BuildMetadata}</BuildFullVersionFormat>
     <BuildFileVersionFormat Condition="$(BuildFileVersionFormat) == ''">{Major}.{Minor}.{Patch}.0</BuildFileVersionFormat>
     <BuildAssemblyVersionFormat Condition="$(BuildAssemblyVersionFormat) == ''">{Major}.0.0.0</BuildAssemblyVersionFormat>
