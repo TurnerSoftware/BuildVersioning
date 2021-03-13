@@ -18,7 +18,7 @@ build_script:
   - ps: dotnet --version
   - ps: dotnet restore
   - ps: dotnet build --no-restore -c Release
-  - ps: dotnet test --no-restore --results-directory $env:BUILD_ARTIFACT_PATH/test-results /p:SkipBuildVersioning=true
+  - ps: dotnet test --no-restore /p:SkipBuildVersioning=true
   - ps: dotnet pack --no-build -c Release /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH
   
 test: false
