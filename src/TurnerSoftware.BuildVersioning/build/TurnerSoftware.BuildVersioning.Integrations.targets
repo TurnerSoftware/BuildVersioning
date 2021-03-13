@@ -2,7 +2,9 @@
 
   <PropertyGroup>
     <BuildVersioningWithGitHub>true</BuildVersioningWithGitHub>
+    <GitHubAutoFetchTags>true</GitHubAutoFetchTags>
     <BuildVersioningWithAppVeyor>true</BuildVersioningWithAppVeyor>
+    <AppVeyorAutoBuildNaming>true</AppVeyorAutoBuildNaming>
     <BuildVersioningWithAzureDevOps>true</BuildVersioningWithAzureDevOps>
   </PropertyGroup>
   
@@ -10,7 +12,7 @@
     <BuildPreReleaseFormat Condition="$(GITHUB_REF.Split('/')[1]) == 'pull'">pr.$(GITHUB_REF.Split('/')[2])</BuildPreReleaseFormat>
     <BuildMetadataFormat>{CommitHash}-github.$(GITHUB_RUN_ID)</BuildMetadataFormat>
   </PropertyGroup>
-  <Target Name="_BuildVersioningWithGitHub" BeforeTargets="BeforeBuild" Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GITHUB_RUN_ID) != ''">
+  <Target Name="_BuildVersioningWithGitHub_AutoFetchTags" BeforeTargets="BeforeBuild" Condition="$(BuildVersioningWithGitHub) == 'true' AND $(GitHubAutoFetchTags) == 'true' AND $(GITHUB_RUN_ID) != ''">
     <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning-GitHubIntegration: Fetching tags for versioning as they aren't available by default in GitHub Actions" />
     <Exec Command="git fetch --prune --unshallow --tags --quiet" IgnoreExitCode="true" StandardErrorImportance="low" StandardOutputImportance="low" />
   </Target>
@@ -19,7 +21,7 @@
     <BuildPreReleaseFormat Condition="$(APPVEYOR_PULL_REQUEST_NUMBER) != ''">pr.$(APPVEYOR_PULL_REQUEST_NUMBER)</BuildPreReleaseFormat>
     <BuildMetadataFormat>{CommitHash}-appveyor.$(APPVEYOR_BUILD_ID)</BuildMetadataFormat>
   </PropertyGroup>
-  <Target Name="_BuildVersioningWithAppVeyor" AfterTargets="BuildVersioning" Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(APPVEYOR) != ''">
+  <Target Name="_BuildVersioningWithAppVeyor_AutoBuildNaming" AfterTargets="BuildVersioning" Condition="$(BuildVersioningWithAppVeyor) == 'true' AND $(AppVeyorAutoBuildNaming) == 'true' AND $(APPVEYOR) != ''">
     <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning-AppVeyorIntegration: Updating AppVeyor build name to $(BuildFullVersion)" />
     <Exec Command="powershell Update-AppveyorBuild -Version $(BuildFullVersion)" />
   </Target>

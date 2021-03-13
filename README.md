@@ -57,9 +57,9 @@ For all commits, the build metadata will include the CI environment and a releva
 
 |Integration|Configuration Tag|Notes|
 |-|-|-|
-|[GitHub Actions](https://github.com/features/actions)|`<BuildVersioningWithGitHub>`|GitHub Actions don't fetch tags by default. This integration will perform a `git fetch` for tags automatically when building your application.|
+|[GitHub Actions](https://github.com/features/actions)|`<BuildVersioningWithGitHub>`|Will perform a `git fetch` for tags that are missing by default for GitHub Actions. This specific behaviour can be disabled by setting `<GitHubAutoFetchTags>` to false.|
 |[Azure DevOps](https://azure.microsoft.com/en-us/services/devops/pipelines/)|`<BuildVersioningWithAzureDevOps>`||
-|[AppVeyor](https://www.appveyor.com/)|`<BuildVersioningWithAppVeyor>`||
+|[AppVeyor](https://www.appveyor.com/)|`<BuildVersioningWithAppVeyor>`|Will update the AppVeyor build name to match the build version. This specific behaviour can be disabled by setting `<AppVeyorAutoBuildNaming>` to false.|
 
 ### Disabling an Integration
 
