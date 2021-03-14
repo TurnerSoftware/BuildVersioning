@@ -1,6 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>TurnerSoftware.BuildVersioning.Tool</AssemblyName>
+    <Title>TurnerSoftware.BuildVersioning.Tool</Title>
+    <Description>Simple build versioning for .NET, powered by Git tags (CLI Tool)</Description>
+    <PackageTags>$(PackageBaseTags)</PackageTags>
+    <Authors>James Turner</Authors>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <BuildVersioningLogLevel>high</BuildVersioningLogLevel>

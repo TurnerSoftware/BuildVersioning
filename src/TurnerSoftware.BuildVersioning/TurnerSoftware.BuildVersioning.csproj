@@ -1,6 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>TurnerSoftware.BuildVersioning</AssemblyName>
+    <Title>TurnerSoftware.BuildVersioning</Title>
+    <Description>Simple build versioning for .NET, powered by Git tags</Description>
+    <PackageTags>$(PackageBaseTags)</PackageTags>
+    <Authors>James Turner</Authors>
+  </PropertyGroup>
+  
+  <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <DevelopmentDependency>true</DevelopmentDependency>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
