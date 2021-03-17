@@ -13,15 +13,15 @@ Inspired by [MinVer](https://github.com/adamralph/minver), Build Versioning is a
 The simplicity comes from how the version strings are generated and the built-in integrations.
 
 ## 📖 Table of Contents
-- [Getting Started](#Getting-Started)
-  - [Example Versions](#Example-Versions)
-- [CI Versioning Integrations](#CI-Versioning-Integrations)
-- [Customizing Version Strings](#Customizing-Version-Strings)
-  - [Formatting Tags](#Formatting-Tags)
-  - [Version Strings](#Version-Strings)
-- [Additional Settings](#Additional-Settings)
+- [Getting Started](#getting-started)
+  - [Example Versions](#example-versions)
+- [CI Versioning Integrations](#integrations)
+- [Customizing Version Strings](#customizing-version-strings)
+  - [Formatting Tags](#formatting-tags)
+  - [Version Strings](#version-strings)
+- [Additional Settings](#additional-settings)
 
-## ⭐ Getting Started
+## <a id="getting-started" /> ⭐ Getting Started
 
 1. [Install Build Versioning](https://www.nuget.org/packages/TurnerSoftware.BuildVersioning/)<br>
 ```powershell
@@ -47,7 +47,7 @@ These examples use the default configuration after installing Build Versioning.
 |Non-PR Commit via GitHub Actions   |1.2.4      |4|1.2.4-dev.4+a4f31ea-github.432515|1.2.4.0|1.0.0.0|
 |PR Commit via GitHub Actions       |1.2.4      |4|1.2.4-pr.17+a4f31ea-github.432515|1.2.4.0|1.0.0.0|
 
-## 🛠 CI Versioning Integrations
+## <a id="integrations" /> 🛠 CI Versioning Integrations
 
 By default, Build Versioning provides rich pre-release and build metadata from the current CI environment.
 For pull requests, this will automatically have a pre-release defined which will include the PR number (eg. `1.2.4-pr.17`).
@@ -69,7 +69,7 @@ Each integration can be individually disabled through configuration. For example
 <BuildVersioningWithGitHub>false</BuildVersioningWithGitHub>
 ```
 
-## ✏ Customizing Version Strings
+## <a id="customizing-version-strings" /> ✏ Customizing Version Strings
 
 ### Formatting Tags
 
@@ -104,7 +104,7 @@ Additionally, the full version string supports two additional formatting tags.
 
 For more information on file version vs assembly version, [see the MSDN docs](https://docs.microsoft.com/en-us/troubleshoot/visualstudio/general/assembly-version-assembly-file-version).
 
-## 🎛 Additonal Settings
+## <a id="additional-settings" /> 🎛 Additonal Settings
 
 ### Disabling Build Versioning
 
