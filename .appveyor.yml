@@ -17,9 +17,9 @@ install:
 build_script:
   - ps: dotnet --version
   - ps: dotnet restore
-  - ps: dotnet build --no-restore -c Release
+  - ps: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
   - ps: dotnet test --no-restore /p:SkipBuildVersioning=true
-  - ps: dotnet pack --no-build -c Release /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH
+  - ps: dotnet pack --no-build -c Release /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH /p:ContinuousIntegrationBuild=true
   
 test: false
 artifacts:

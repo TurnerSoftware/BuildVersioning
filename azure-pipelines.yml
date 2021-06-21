@@ -7,7 +7,6 @@ jobs:
     vmImage: ubuntu-latest
 
   variables:
-    BUILD_CONFIGURATION: Release
     BUILD_ARTIFACT_PATH: $(Build.ArtifactStagingDirectory)
  
   steps:
@@ -17,13 +16,13 @@ jobs:
   - script: dotnet restore
     displayName: Install dependencies
 
-  - script: dotnet build --no-restore -c $(BUILD_CONFIGURATION)
+  - script: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
     displayName: Build
 
   - script: dotnet test --no-restore /p:SkipBuildVersioning=true
     displayName: Test
        
-  - script: dotnet pack --no-build -c $(BUILD_CONFIGURATION) /p:PackageOutputPath=$(BUILD_ARTIFACT_PATH)
+  - script: dotnet pack --no-build -c Release /p:PackageOutputPath=$(BUILD_ARTIFACT_PATH) /p:ContinuousIntegrationBuild=true
     displayName: Pack
     
   - task: PublishBuildArtifacts@1
