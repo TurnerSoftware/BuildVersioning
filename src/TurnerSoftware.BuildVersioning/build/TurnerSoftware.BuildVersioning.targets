@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <MSBuildAllProjects Condition="'$(MSBuildAssemblyVersion)' == '' Or '$(MSBuildAssemblyVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <GetPackageVersionDependsOn>$(GetPackageVersionDependsOn);BuildVersioning</GetPackageVersionDependsOn>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -22,7 +23,7 @@
           Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'" />
 
   <Target Name="BuildVersioning" 
-          BeforeTargets="BeforeCompile;GenerateNuspec;CollectPackageReferences" 
+          BeforeTargets="BeforeCompile;GenerateNuspec" 
           Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'">
     <Error Condition="'$(UsingMicrosoftNETSdk)' != 'true'" Code="BLDVER0001" Text="Build Versioning only works in SDK-style projects." />
     <Message Importance="$(BuildVersioningLogLevel)" Text="BuildVersioning: Project=$(MSBuildProjectFile)" />
