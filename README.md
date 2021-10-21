@@ -1,16 +1,27 @@
-﻿# Build Versioning
+﻿<div align="center">
+
+![Icon](images/icon.png)
+# Build Versioning
 
 Simple build versioning for .NET, powered by Git tags.
 
-[![AppVeyor](https://img.shields.io/appveyor/ci/Turnerj/buildversioning/main.svg)](https://ci.appveyor.com/project/Turnerj/BuildVersioning)
+![Build](https://img.shields.io/github/workflow/status/TurnerSoftware/buildversioning/Build)
 [![Codecov](https://img.shields.io/codecov/c/github/turnersoftware/BuildVersioning/main.svg)](https://codecov.io/gh/TurnerSoftware/BuildVersioning)
 [![NuGet](https://img.shields.io/nuget/v/TurnerSoftware.BuildVersioning.svg)](https://www.nuget.org/packages/TurnerSoftware.BuildVersioning/)
-
+</div>
 
 ## Overview
 
 Inspired by [MinVer](https://github.com/adamralph/minver), Build Versioning is a different attempt at the same problem - to make versioning simple.
 The simplicity comes from how the version strings are generated and the built-in integrations.
+
+## 🤝 Licensing and Support
+
+Build Versioning is licensed under the MIT license. It is free to use in personal and commercial projects.
+
+There are [support plans](https://turnersoftware.com.au/support-plans) available that cover all active [Turner Software OSS projects](https://github.com/TurnerSoftware).
+Support plans provide private email support, expert usage advice for our projects, priority bug fixes and more.
+These support plans help fund our OSS commitments to provide better software for everyone.
 
 ## 📖 Table of Contents
 - [Getting Started](#getting-started)
