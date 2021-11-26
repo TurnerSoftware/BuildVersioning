@@ -1,4 +1,4 @@
-image: Visual Studio 2019
+image: Visual Studio 2022
 skip_branch_with_pr: true
 
 environment:
@@ -10,9 +10,6 @@ environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 
   BUILD_ARTIFACT_PATH: build-artifacts
-
-install:
-  - choco install dotnet-sdk --version 5.0.200
 
 build_script:
   - ps: dotnet --version
