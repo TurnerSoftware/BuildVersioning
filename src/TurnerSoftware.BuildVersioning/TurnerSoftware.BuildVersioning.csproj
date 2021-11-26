@@ -9,7 +9,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <TargetFrameworks>$(TargetFrameworks)</TargetFrameworks>
+    <TargetFramework>net6.0</TargetFramework>
     <DevelopmentDependency>true</DevelopmentDependency>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <IncludeBuildOutput>false</IncludeBuildOutput>
