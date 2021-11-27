@@ -12,24 +12,24 @@ namespace TurnerSoftware.BuildVersioning.Tool
 			{
 				new Option<string>("--full-version-format")
 				{
-					Required = true,
+					IsRequired = true,
 					Description = "The string to format for the full version."
 				},
 				new Option<string>("--file-version-format")
 				{
-					Required = true,
+					IsRequired = true,
 					Description = "The string to format for the file version."
 				},
 				new Option<string>("--assembly-version-format")
 				{
-					Required = true,
+					IsRequired = true,
 					Description = "The string to format for the assembly version."
 				},
-				new Option<string>("--prerelease-format", defaultValue: string.Empty)
+				new Option<string>("--prerelease-format", () => string.Empty)
 				{
 					Description = "The string to format for the pre-release."
 				},
-				new Option<string>("--build-metadata-format", defaultValue: string.Empty)
+				new Option<string>("--build-metadata-format", () => string.Empty)
 				{
 					Description = "The string to format for the build metadata."
 				}
