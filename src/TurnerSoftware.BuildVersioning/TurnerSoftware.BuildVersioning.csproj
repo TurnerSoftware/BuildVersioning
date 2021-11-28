@@ -1,36 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <AssemblyName>TurnerSoftware.BuildVersioning</AssemblyName>
-    <Title>TurnerSoftware.BuildVersioning</Title>
-    <Description>Simple build versioning for .NET, powered by Git tags</Description>
-    <PackageTags>$(PackageBaseTags)</PackageTags>
-    <Authors>James Turner</Authors>
-  </PropertyGroup>
-  
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <DevelopmentDependency>true</DevelopmentDependency>
-    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    <NoWarn>$(NoWarn);NU5100;NU5104</NoWarn>
-    <BuildVersioningLogLevel>high</BuildVersioningLogLevel>
-    <IncludeSymbols>false</IncludeSymbols>
-  </PropertyGroup>
+	<PropertyGroup>
+		<AssemblyName>TurnerSoftware.BuildVersioning</AssemblyName>
+		<Title>TurnerSoftware.BuildVersioning</Title>
+		<Description>Simple build versioning for .NET, powered by Git tags</Description>
+		<PackageTags>$(PackageBaseTags)</PackageTags>
+		<Authors>James Turner</Authors>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <BuildVersioningToolPath>$(MSBuildThisFileDirectory)../TurnerSoftware.BuildVersioning.Tool/bin/$(Configuration)/$(TargetFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<DevelopmentDependency>true</DevelopmentDependency>
+		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5100;NU5104</NoWarn>
+		<BuildVersioningLogLevel>high</BuildVersioningLogLevel>
+		<IncludeSymbols>false</IncludeSymbols>
+	</PropertyGroup>
 
-  <Import Project="build/TurnerSoftware.BuildVersioning.targets" />
+	<PropertyGroup>
+		<BuildVersioningToolBasePath>$(MSBuildThisFileDirectory)../TurnerSoftware.BuildVersioning.Tool/bin/$(Configuration)</BuildVersioningToolBasePath>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\TurnerSoftware.BuildVersioning.Tool\TurnerSoftware.BuildVersioning.Tool.csproj" PrivateAssets="All" />
-  </ItemGroup>
+	<Import Project="build/TurnerSoftware.BuildVersioning.targets" />
 
-  <ItemGroup>
-    <Content Include="buildMultiTargeting\*" Pack="true" PackagePath="buildMultiTargeting" />
-    <Content Include="build\*" Pack="true" PackagePath="build" />
-    <None Include="$(OutputPath)/*" Exclude="$(OutputPath)/*.dev.json;$(OutputPath)/TurnerSoftware.BuildVersioning.dll;$(OutputPath)/TurnerSoftware.BuildVersioning.pdb;$(OutputPath)/TurnerSoftware.BuildVersioning.deps.json" Pack="true" PackagePath="tools" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\TurnerSoftware.BuildVersioning.Tool\TurnerSoftware.BuildVersioning.Tool.csproj" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="buildMultiTargeting\*" Pack="true" PackagePath="buildMultiTargeting" />
+		<Content Include="build\*" Pack="true" PackagePath="build" />
+		<None Include="$(BuildVersioningToolBasePath)/net5.0/*" Exclude="**/*.dev.json;**/*.exe" Pack="true" PackagePath="tools/net5.0" LinkBase="tools/net5.0" />
+		<None Include="$(BuildVersioningToolBasePath)/net6.0/*" Exclude="**/*.dev.json;**/*.exe" Pack="true" PackagePath="tools/net6.0" LinkBase="tools/net6.0" />
+	</ItemGroup>
+
 </Project>
