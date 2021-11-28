@@ -14,9 +14,9 @@ environment:
 build_script:
   - ps: dotnet --info
   - ps: dotnet restore
-  - ps: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
+  - ps: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true -bl:$env:BUILD_ARTIFACT_PATH/msbuild-build.binlog
   - ps: dotnet test --no-restore /p:SkipBuildVersioning=true
-  - ps: dotnet pack --no-build -c Release /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH /p:ContinuousIntegrationBuild=true
+  - ps: dotnet pack --no-build -c Release /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH /p:ContinuousIntegrationBuild=true -bl:$env:BUILD_ARTIFACT_PATH/msbuild-pack.binlog
   
 test: false
 artifacts:
