@@ -12,7 +12,7 @@ environment:
   BUILD_ARTIFACT_PATH: build-artifacts
 
 build_script:
-  - ps: dotnet --version
+  - ps: dotnet --info
   - ps: dotnet restore
   - ps: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
   - ps: dotnet test --no-restore /p:SkipBuildVersioning=true

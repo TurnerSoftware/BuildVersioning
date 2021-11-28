@@ -19,8 +19,8 @@ jobs:
     inputs:
       version: 6.0.x
 
-  - script: dotnet --version
-    displayName: .NET version
+  - script: dotnet --info
+    displayName: .NET info
 
   - script: dotnet restore
     displayName: Install dependencies

@@ -31,9 +31,10 @@ jobs:
       uses: actions/setup-dotnet@v1.9.0
       with:
         dotnet-version: |
-          3.1.x
           5.0.x
           6.0.x
+    - name: .NET info
+      run: dotnet --info
     - name: Install dependencies
       run: dotnet restore
     - name: Build
