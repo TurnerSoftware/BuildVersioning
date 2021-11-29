@@ -24,6 +24,7 @@ Support plans provide private email support, expert usage advice for our project
 These support plans help fund our OSS commitments to provide better software for everyone.
 
 ## 📖 Table of Contents
+- [Requirements](#requirements)
 - [Getting Started](#getting-started)
   - [Example Versions](#example-versions)
 - [CI Versioning Integrations](#integrations)
@@ -31,6 +32,16 @@ These support plans help fund our OSS commitments to provide better software for
   - [Formatting Tags](#formatting-tags)
   - [Version Strings](#version-strings)
 - [Additional Settings](#additional-settings)
+
+## <a id="requirements" /> 📋 Requirements
+
+- Your project must be using a modern SDK-style project file
+- One of the following .NET runtimes must be installed:
+  - .NET 5
+  - .NET 6
+
+The runtime requirement is so that Build Versioning itself can run.
+Your project though can target whatever version of .NET you want (Framework/Standard/Core etc).
 
 ## <a id="getting-started" /> ⭐ Getting Started
 
@@ -123,4 +134,4 @@ You can disable build versioning by setting `<SkipBuildVersioning>` in your proj
 
 ### Enable Output Logging
 
-You can enable output logging for Build Versioning by specifying `<BuildVersioningLogLevel>` as `high`.
+You can enable output logging for Build Versioning by specifying `<BuildVersioningLogLevel>` as `normal` (for basic logging) or `high` (for detailed logging).
