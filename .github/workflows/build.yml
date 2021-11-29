@@ -45,6 +45,7 @@ jobs:
       run: dotnet pack --no-build -c Release /p:PackageOutputPath=${{env.BUILD_ARTIFACT_PATH}} /p:ContinuousIntegrationBuild=true -bl:${{env.BUILD_ARTIFACT_PATH}}/msbuild-pack.binlog
     - name: Publish artifacts
       uses: actions/upload-artifact@v2
+      if: always()
       with:
         name: ${{matrix.os}}
         path: ${{env.BUILD_ARTIFACT_PATH}}
