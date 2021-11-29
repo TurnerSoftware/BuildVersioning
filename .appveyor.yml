@@ -1,4 +1,4 @@
-image: Visual Studio 2019
+image: Visual Studio 2022
 skip_branch_with_pr: true
 
 environment:
@@ -11,15 +11,12 @@ environment:
 
   BUILD_ARTIFACT_PATH: build-artifacts
 
-install:
-  - choco install dotnet-sdk --version 5.0.200
-
 build_script:
-  - ps: dotnet --version
+  - ps: dotnet --info
   - ps: dotnet restore
-  - ps: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
+  - ps: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true -bl:$env:BUILD_ARTIFACT_PATH/msbuild-build.binlog
   - ps: dotnet test --no-restore /p:SkipBuildVersioning=true
-  - ps: dotnet pack --no-build -c Release /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH /p:ContinuousIntegrationBuild=true
+  - ps: dotnet pack --no-build -c Release /p:PackageOutputPath=$env:BUILD_ARTIFACT_PATH /p:ContinuousIntegrationBuild=true -bl:$env:BUILD_ARTIFACT_PATH/msbuild-pack.binlog
   
 test: false
 artifacts:

@@ -1,37 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <AssemblyName>TurnerSoftware.BuildVersioning.Tool</AssemblyName>
-    <Title>TurnerSoftware.BuildVersioning.Tool</Title>
-    <Description>Simple build versioning for .NET, powered by Git tags (CLI Tool)</Description>
-    <PackageTags>$(PackageBaseTags)</PackageTags>
-    <Authors>James Turner</Authors>
-  </PropertyGroup>
+	<PropertyGroup>
+		<AssemblyName>TurnerSoftware.BuildVersioning.Tool</AssemblyName>
+		<Title>TurnerSoftware.BuildVersioning.Tool</Title>
+		<Description>Simple build versioning for .NET, powered by Git tags (CLI Tool)</Description>
+		<PackageTags>$(PackageBaseTags)</PackageTags>
+		<Authors>James Turner</Authors>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <BuildVersioningLogLevel>high</BuildVersioningLogLevel>
-    <RootNamespace>TurnerSoftware.BuildVersioning.Tool</RootNamespace>
-    <PackAsTool>true</PackAsTool>
-    <ToolCommandName>buildversioning</ToolCommandName>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<BuildVersioningLogLevel>high</BuildVersioningLogLevel>
+		<RootNamespace>TurnerSoftware.BuildVersioning.Tool</RootNamespace>
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>buildversioning</ToolCommandName>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <BuildVersioningToolPath>$(MSBuildThisFileDirectory)bin/$(Configuration)/$(TargetFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
-    <SelfHostedBuildVersioning Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'">true</SelfHostedBuildVersioning>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20071.2" PrivateAssets="All" />
-  </ItemGroup>
+	<PropertyGroup>
+		<BuildVersioningToolBasePath>$(MSBuildThisFileDirectory)bin/$(Configuration)</BuildVersioningToolBasePath>
+		<SelfHostedBuildVersioning Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'">true</SelfHostedBuildVersioning>
+	</PropertyGroup>
 
-  <!-- Self-hosting Support -->
-  <Import Project="../TurnerSoftware.BuildVersioning/build/TurnerSoftware.BuildVersioning.targets" Condition="$(SelfHostedBuildVersioning) == 'true'" />
-  <Target Name="_SelfHostedBuildVersioning" BeforeTargets="BeforeBuild" Condition="$(SelfHostedBuildVersioning) == 'true' AND !Exists($(BuildVersioningToolPath))">
-    <Message Importance="high" Text="BuildVersioning-SelfHosting: Establishing a baseline build to provide versioning support" />
-    <Exec Command="dotnet build TurnerSoftware.BuildVersioning.Tool.csproj -c $(Configuration) -v quiet --nologo /p:SkipBuildVersioning=true" StandardOutputImportance="low"></Exec>
-    <Message Importance="high" Text="BuildVersioning-SelfHosting: Baseline build has been completed" />
-  </Target>
-  
+	<ItemGroup>
+		<PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" PrivateAssets="All" />
+	</ItemGroup>
+
+	<!-- Self-hosting Support -->
+	<Import Project="../TurnerSoftware.BuildVersioning/build/TurnerSoftware.BuildVersioning.targets" Condition="$(SelfHostedBuildVersioning) == 'true'" />
+	<Target Name="_SelfHostedBuildVersioning" BeforeTargets="BeforeBuild" Condition="$(SelfHostedBuildVersioning) == 'true' AND !Exists($(BuildVersioningToolPath))">
+		<Message Importance="high" Text="Build Versioning Self-Hosting ($(TargetFramework)): Started" />
+		<Exec Command="dotnet build TurnerSoftware.BuildVersioning.Tool.csproj -c $(Configuration) -f $(TargetFramework) -v quiet --nologo /p:SkipBuildVersioning=true" StandardOutputImportance="low"></Exec>
+		<Message Importance="high" Text="Build Versioning Self-Hosting ($(TargetFramework)): Complete" />
+	</Target>
+
 </Project>
