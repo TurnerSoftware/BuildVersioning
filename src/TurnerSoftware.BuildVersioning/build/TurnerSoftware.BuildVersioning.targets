@@ -25,11 +25,11 @@
 		<_BuildVersioningMessagePrefix>Build Versioning ($(BuildVersioningProjectReference))</_BuildVersioningMessagePrefix>
 	</PropertyGroup>
 
-	<Target Name="DetectBuildVersioningToolRuntime" Condition="$(_BuildVersioningToolRuntime) == ''" BeforeTargets="BeforeBuild">
-		<Exec Command="dotnet --info" ConsoleToMSBuild="true" StandardOutputImportance="Low" ContinueOnError="true">
+	<Target Name="DetectBuildVersioningToolRuntime" BeforeTargets="BeforeBuild">
+		<Exec Condition="$(_BuildVersioningToolRuntime) == ''" Command="dotnet --info" ConsoleToMSBuild="true" StandardOutputImportance="Low" ContinueOnError="true">
 			<Output TaskParameter="ConsoleOutput" PropertyName="_DotnetInfo" />
 		</Exec>
-		<PropertyGroup>
+		<PropertyGroup Condition="$(_DotnetInfo) != ''">
 			<_BuildVersioningToolRuntime Condition="$(_DotnetInfo.Contains(&quot;NETCore.App 5.0&quot;))">net5.0</_BuildVersioningToolRuntime>
 			<_BuildVersioningToolRuntime Condition="$(_DotnetInfo.Contains(&quot;NETCore.App 6.0&quot;))">net6.0</_BuildVersioningToolRuntime>
 		</PropertyGroup>

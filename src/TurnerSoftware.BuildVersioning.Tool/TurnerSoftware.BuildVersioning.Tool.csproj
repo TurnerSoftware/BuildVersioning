@@ -18,6 +18,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
+		<_BuildVersioningToolRuntime>$(TargetFramework)</_BuildVersioningToolRuntime>
 		<BuildVersioningToolBasePath>$(MSBuildThisFileDirectory)bin/$(Configuration)</BuildVersioningToolBasePath>
 		<SelfHostedBuildVersioning Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'">true</SelfHostedBuildVersioning>
 	</PropertyGroup>
