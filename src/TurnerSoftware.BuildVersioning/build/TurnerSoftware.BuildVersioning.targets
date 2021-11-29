@@ -19,18 +19,24 @@
 		<BuildVersioningLogLevel Condition="$(BuildVersioningLogLevel) == ''">low</BuildVersioningLogLevel>
 	</PropertyGroup>
 
-	<Target Name="DetectBuildVersioningToolFramework" Condition="$(BuildVersioningToolFramework) == ''" BeforeTargets="BeforeBuild">
+	<PropertyGroup>
+		<BuildVersioningProjectReference>$(MSBuildProjectName)</BuildVersioningProjectReference>
+		<BuildVersioningProjectReference Condition="$(TargetFramework) != ''">$(BuildVersioningProjectReference)/$(TargetFramework)</BuildVersioningProjectReference>
+		<_BuildVersioningMessagePrefix>Build Versioning ($(BuildVersioningProjectReference))</_BuildVersioningMessagePrefix>
+	</PropertyGroup>
+
+	<Target Name="DetectBuildVersioningToolRuntime" Condition="$(_BuildVersioningToolRuntime) == ''" BeforeTargets="BeforeBuild">
 		<Exec Command="dotnet --info" ConsoleToMSBuild="true" StandardOutputImportance="Low" ContinueOnError="true">
 			<Output TaskParameter="ConsoleOutput" PropertyName="_DotnetInfo" />
 		</Exec>
 		<PropertyGroup>
-			<BuildVersioningToolFramework Condition="$(_DotnetInfo.Contains(&quot;NETCore.App 5.0&quot;))">net5.0</BuildVersioningToolFramework>
-			<BuildVersioningToolFramework Condition="$(_DotnetInfo.Contains(&quot;NETCore.App 6.0&quot;))">net6.0</BuildVersioningToolFramework>
+			<_BuildVersioningToolRuntime Condition="$(_DotnetInfo.Contains(&quot;NETCore.App 5.0&quot;))">net5.0</_BuildVersioningToolRuntime>
+			<_BuildVersioningToolRuntime Condition="$(_DotnetInfo.Contains(&quot;NETCore.App 6.0&quot;))">net6.0</_BuildVersioningToolRuntime>
 		</PropertyGroup>
-		<Error Condition="$(BuildVersioningToolFramework) == ''" Text="Build versioning failed. Installed .NET versions incompatible with Build Versioning." />
-		<Message Importance="$(BuildVersioningLogLevel)" Text="Build Versioning Tool Runtime: $(BuildVersioningToolFramework)" />
+		<Error Condition="$(_BuildVersioningToolRuntime) == ''" Text="Build versioning failed. Installed .NET runtimes incompatible with Build Versioning." />
+		<Message Importance="$(BuildVersioningLogLevel)" Text="$(_BuildVersioningMessagePrefix): ToolRuntime=$(_BuildVersioningToolRuntime)" />
 		<PropertyGroup>
-			<BuildVersioningToolPath>$(BuildVersioningToolBasePath)/$(BuildVersioningToolFramework)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
+			<BuildVersioningToolPath>$(BuildVersioningToolBasePath)/$(_BuildVersioningToolRuntime)/TurnerSoftware.BuildVersioning.Tool.dll</BuildVersioningToolPath>
 		</PropertyGroup>
 	</Target>
 
@@ -38,18 +44,13 @@
 			Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'" />
 
 	<Target Name="BuildVersioning"
-			DependsOnTargets="DetectBuildVersioningToolFramework"
+			DependsOnTargets="DetectBuildVersioningToolRuntime"
 			BeforeTargets="BeforeCompile;GenerateNuspec"
 			Condition="$(DesignTimeBuild) != 'true' AND $(SkipBuildVersioning) != 'true'">
 		<Error Condition="'$(UsingMicrosoftNETSdk)' != 'true'" Code="BLDVER0001" Text="Build Versioning only works in SDK-style projects." />
 		<PropertyGroup>
 			<_BuildVersioningDebuggingMessage Condition="$(BuildVersioningLogLevel) == 'high'">high</_BuildVersioningDebuggingMessage>
 			<_BuildVersioningInfoMessage Condition="$(BuildVersioningLogLevel) != 'low'">high</_BuildVersioningInfoMessage>
-		</PropertyGroup>
-		<PropertyGroup>
-			<_BuildVersioningMessagePrefix>Build Versioning ($(MSBuildProjectName)</_BuildVersioningMessagePrefix>
-			<_BuildVersioningMessagePrefix Condition="$(TargetFramework) != ''">$(_BuildVersioningMessagePrefix)/$(TargetFramework)</_BuildVersioningMessagePrefix>
-			<_BuildVersioningMessagePrefix>$(_BuildVersioningMessagePrefix))</_BuildVersioningMessagePrefix>
 		</PropertyGroup>
 		<Message Importance="$(_BuildVersioningDebuggingMessage)" Text="$(_BuildVersioningMessagePrefix): FullVersionFormat=$(BuildFullVersionFormat)" />
 		<Message Importance="$(_BuildVersioningDebuggingMessage)" Text="$(_BuildVersioningMessagePrefix): FileVersionFormat=$(BuildFileVersionFormat)" />
