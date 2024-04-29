@@ -5,7 +5,7 @@
 
 Simple build versioning for .NET, powered by Git tags.
 
-![Build](https://img.shields.io/github/workflow/status/TurnerSoftware/buildversioning/Build)
+![Build](https://img.shields.io/github/actions/workflow/status/TurnerSoftware/buildversioning/build.yml?branch=main)
 [![Codecov](https://img.shields.io/codecov/c/github/turnersoftware/BuildVersioning/main.svg)](https://codecov.io/gh/TurnerSoftware/BuildVersioning)
 [![NuGet](https://img.shields.io/nuget/v/TurnerSoftware.BuildVersioning.svg)](https://www.nuget.org/packages/TurnerSoftware.BuildVersioning/)
 </div>
@@ -37,8 +37,8 @@ These support plans help fund our OSS commitments to provide better software for
 
 - Your project must be using a modern SDK-style project file
 - One of the following .NET runtimes must be installed:
-  - .NET 5
   - .NET 6
+  - .NET 8
 
 The runtime requirement is so that Build Versioning itself can run.
 Your project though can target whatever version of .NET you want (Framework/Standard/Core etc).

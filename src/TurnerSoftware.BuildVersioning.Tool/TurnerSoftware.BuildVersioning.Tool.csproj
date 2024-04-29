@@ -10,7 +10,7 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
 		<BuildVersioningLogLevel>high</BuildVersioningLogLevel>
 		<RootNamespace>TurnerSoftware.BuildVersioning.Tool</RootNamespace>
 		<PackAsTool>true</PackAsTool>
@@ -25,6 +25,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
 	</ItemGroup>
 
 	<!-- Self-hosting Support -->
