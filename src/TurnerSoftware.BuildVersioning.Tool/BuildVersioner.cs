@@ -33,7 +33,12 @@ internal class BuildVersioner(IVersionDetailsProvider versionDetailsProvider)
 		var fileVersion = FormatVersion(options.FileVersionFormat, versionDetails);
 		var assemblyVersion = FormatVersion(options.AssemblyVersionFormat, versionDetails);
 
-		return new BuildVersion(fullVersion, fileVersion, assemblyVersion);
+		return new BuildVersion
+		{
+			FullVersion = fullVersion,
+			FileVersion = fileVersion,
+			AssemblyVersion = assemblyVersion
+		};
 	}
 
 	private static string FormatFullVersion(string format, VersionDetails versionDetails)

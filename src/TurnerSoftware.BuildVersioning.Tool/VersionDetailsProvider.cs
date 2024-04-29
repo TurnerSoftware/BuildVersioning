@@ -31,22 +31,24 @@ internal class VersionDetailsProvider(IGitCommandRunner gitDataProvider) : IVers
 
 		if (matchedGroups["major"].Success)
 		{
-			return new VersionDetails(
-				MajorVersion: int.Parse(matchedGroups["major"].Value),
-				MinorVersion: int.Parse(matchedGroups["minor"].Value),
-				PatchVersion: int.Parse(matchedGroups["patch"].Value),
-				PreRelease: matchedGroups["preRelease"].Success ? matchedGroups["preRelease"].Value : default,
-				BuildMetadata: matchedGroups["buildMetadata"].Success ? matchedGroups["buildMetadata"].Value : default,
-				CommitHeight: int.Parse(matchedGroups["commitHeight"].Value),
-				IsTaggedRelease: int.Parse(matchedGroups["commitHeight"].Value) == 0,
-				CommitHash: matchedGroups["commitHash"].Value
-			);
+			return new VersionDetails
+			{
+				MajorVersion = int.Parse(matchedGroups["major"].Value),
+				MinorVersion = int.Parse(matchedGroups["minor"].Value),
+				PatchVersion = int.Parse(matchedGroups["patch"].Value),
+				PreRelease = matchedGroups["preRelease"].Success ? matchedGroups["preRelease"].Value : default,
+				BuildMetadata = matchedGroups["buildMetadata"].Success ? matchedGroups["buildMetadata"].Value : default,
+				CommitHeight = int.Parse(matchedGroups["commitHeight"].Value),
+				IsTaggedRelease = int.Parse(matchedGroups["commitHeight"].Value) == 0,
+				CommitHash = matchedGroups["commitHash"].Value
+			};
 		}
 		else
 		{
-			return new VersionDetails(
-				matchedGroups["commitHash"].Value
-			);
+			return new VersionDetails
+			{
+				CommitHash = matchedGroups["commitHash"].Value
+			};
 		}
 	}
 }

@@ -35,13 +35,14 @@ rootCommand.Description = "Build Versioning Tool";
 rootCommand.Handler = CommandHandler.Create<string, string, string, string, string>((fullVersionFormat, fileVersionFormat, assemblyVersionFormat, preReleaseFormat, buildMetadataFormat) =>
 {
 	var buildVersioner = new BuildVersioner(new VersionDetailsProvider(new GitCommandRunner()));
-	var buildVersion = buildVersioner.GetBuildVersion(new BuildVersioningOptions(
-		fullVersionFormat,
-		fileVersionFormat,
-		assemblyVersionFormat,
-		preReleaseFormat,
-		buildMetadataFormat
-	));
+	var buildVersion = buildVersioner.GetBuildVersion(new BuildVersioningOptions
+	{
+		FullVersionFormat = fullVersionFormat,
+		FileVersionFormat = fileVersionFormat,
+		AssemblyVersionFormat = assemblyVersionFormat,
+		PreReleaseFormat = preReleaseFormat,
+		BuildMetadataFormat = buildMetadataFormat
+	});
 
 	Console.WriteLine($"{buildVersion.FullVersion};{buildVersion.FileVersion};{buildVersion.AssemblyVersion}");
 	return 0;
