@@ -1,7 +1,6 @@
-﻿namespace TurnerSoftware.BuildVersioning.Tool
+﻿namespace TurnerSoftware.BuildVersioning.Tool;
+
+public interface IVersionDetailsProvider
 {
-	public interface IVersionDetailsProvider
-	{
-		VersionDetails GetVersionDetails();
-	}
+	VersionDetails GetVersionDetails();
 }

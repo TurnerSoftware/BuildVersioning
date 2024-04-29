@@ -30,8 +30,8 @@
 			<Output TaskParameter="ConsoleOutput" PropertyName="_DotnetInfo" />
 		</Exec>
 		<PropertyGroup Condition="$(_DotnetInfo) != ''">
-			<_BuildVersioningToolRuntime Condition="$(_DotnetInfo.Contains(&quot;NETCore.App 5.0&quot;))">net5.0</_BuildVersioningToolRuntime>
 			<_BuildVersioningToolRuntime Condition="$(_DotnetInfo.Contains(&quot;NETCore.App 6.0&quot;))">net6.0</_BuildVersioningToolRuntime>
+			<_BuildVersioningToolRuntime Condition="$(_DotnetInfo.Contains(&quot;NETCore.App 8.0&quot;))">net8.0</_BuildVersioningToolRuntime>
 		</PropertyGroup>
 		<Error Condition="$(_BuildVersioningToolRuntime) == ''" Text="Build versioning failed. Installed .NET runtimes incompatible with Build Versioning." />
 		<Message Importance="$(BuildVersioningLogLevel)" Text="$(_BuildVersioningMessagePrefix): ToolRuntime=$(_BuildVersioningToolRuntime)" />

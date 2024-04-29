@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<DevelopmentDependency>true</DevelopmentDependency>
 		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
@@ -31,8 +31,12 @@
 	<ItemGroup>
 		<Content Include="buildMultiTargeting\*" Pack="true" PackagePath="buildMultiTargeting" />
 		<Content Include="build\*" Pack="true" PackagePath="build" />
-		<None Include="$(BuildVersioningToolBasePath)/net5.0/*" Exclude="**/*.dev.json;**/*.exe" Pack="true" PackagePath="tools/net5.0" LinkBase="tools/net5.0" />
 		<None Include="$(BuildVersioningToolBasePath)/net6.0/*" Exclude="**/*.dev.json;**/*.exe" Pack="true" PackagePath="tools/net6.0" LinkBase="tools/net6.0" />
+		<None Include="$(BuildVersioningToolBasePath)/net8.0/*" Exclude="**/*.dev.json;**/*.exe" Pack="true" PackagePath="tools/net8.0" LinkBase="tools/net8.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
 	</ItemGroup>
 
 </Project>
