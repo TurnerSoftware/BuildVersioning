@@ -28,7 +28,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Install .NET SDKs
-      uses: actions/setup-dotnet@v1.9.0
+      uses: actions/setup-dotnet@v1.10.0
       with:
         dotnet-version: |
           6.0.x
